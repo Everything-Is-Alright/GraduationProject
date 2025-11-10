@@ -12,13 +12,20 @@ public class Player : MonoBehaviour
     public PlayerMoveState MoveState { get; private set; }
     public PlayerJumpState JumpState { get; private set; }
     public PlayerFallState FallState { get; private set; }
+    public PlayerRollState RollState { get; private set; }
 
 
     [Header("Movement details")]
     public float movespeed;
     public float jumpspeed = 5;
     public float InAirMoveMultuplier = .7f;
-    private bool facingRight = true;
+    public bool facingRight = true;
+
+    [Header("Roll detail")]
+    public float RollDuration = 0.75f;
+    public Vector2 RollDir;
+    public float RollTimer;
+    public float RollMoveMultiplier = 1.3f;
 
     [Header("collision detection")]
     [SerializeField] private float groundCheckDistance;
@@ -39,6 +46,7 @@ public class Player : MonoBehaviour
         MoveState = new PlayerMoveState(this, stateMachine, "IsMove");
         JumpState = new PlayerJumpState(this, stateMachine, "IsJumpFall");
         FallState = new PlayerFallState(this, stateMachine, "IsJumpFall");
+        RollState = new PlayerRollState(this, stateMachine, "IsRoll");
     }
 
     private void OnEnable()
@@ -66,7 +74,7 @@ public class Player : MonoBehaviour
         HandleFlip(xVelocity);
     }
 
-    private void HandleFlip(float xVelocity)
+    public void HandleFlip(float xVelocity)
     {
         if(xVelocity > 0 && facingRight == false)
         {

@@ -30,5 +30,10 @@ public class PlayerGroundState : EntityState
         {
             stateMachine.ChangeState(player.JumpState);
         }
+
+        if(player.input.Player.Roll.WasPressedThisFrame())
+        {
+            stateMachine.ChangeState(player.RollState);
+        }
     }
 }
