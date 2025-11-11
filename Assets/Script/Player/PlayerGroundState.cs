@@ -26,12 +26,12 @@ public class PlayerGroundState : EntityState
             stateMachine.ChangeState(player.FallState);
         }
 
-        if(player.input.Player.Jump.WasPressedThisFrame())
+        if(player.stateTimer <= 0 && player.input.Player.Jump.WasPressedThisFrame())
         {
             stateMachine.ChangeState(player.JumpState);
         }
 
-        if(player.input.Player.Roll.WasPressedThisFrame())
+        if ((player.stateTimer <= 0 && player.input.Player.Roll.WasPressedThisFrame()) && player.groundDetected)
         {
             stateMachine.ChangeState(player.RollState);
         }

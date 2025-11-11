@@ -454,6 +454,10 @@ MonoBehaviour:
   movespeed: 6
   jumpspeed: 7
   InAirMoveMultuplier: 0.7
+  facingRight: 1
+  stateTimer: 0
+  RollDir: {x: 0, y: 0}
+  RollMoveMultiplier: 1.3
   groundCheckDistance: 1.32
   whatIsGround:
     serializedVersion: 2

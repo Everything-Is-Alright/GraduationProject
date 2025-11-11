@@ -20,12 +20,11 @@ public class Player : MonoBehaviour
     public float jumpspeed = 5;
     public float InAirMoveMultuplier = .7f;
     public bool facingRight = true;
+    [SerializeField]public float stateTimer;
 
     [Header("Roll detail")]
-    public float RollDuration = 0.75f;
     public Vector2 RollDir;
-    public float RollTimer;
-    public float RollMoveMultiplier = 1.3f;
+    public float RollMoveMultiplier = 1.5f;
 
     [Header("collision detection")]
     [SerializeField] private float groundCheckDistance;
