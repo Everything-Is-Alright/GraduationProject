@@ -1,16 +1,17 @@
 using UnityEngine;
 
-public class PlayerRollState : EntityState
+public class PlayerDashState : EntityState
 {
-    public PlayerRollState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerDashState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
-    private float rollDuration = 0.6f;
+
+    private float dashDuration = 0.25f;
 
     public override void Enter()
     {
         base.Enter();
-        
+
         if(player.moveInput.x != 0)
         {
             player.playerDir = player.moveInput;
@@ -20,29 +21,25 @@ public class PlayerRollState : EntityState
             player.playerDir = player.facingRight ? Vector2.right : Vector2.left;
         }
 
-
-        player.stateTimer = rollDuration;
-
-        player.HandleFlip(player.playerDir.x);
+        player.stateTimer = dashDuration;
     }
 
     public override void Exit()
     {
         base.Exit();
 
-        player.SetVelocity(0, player.rb.linearVelocityY);
-        player.stateTimer = 0f;
+        player.stateTimer = 0;
     }
 
     public override void Update()
     {
         base.Update();
 
-        player.SetVelocity(player.playerDir.x * player.movespeed * player.RollMoveMultiplier, player.rb.linearVelocityY);
-        
+        player.SetVelocity(player.playerDir.x * player.movespeed * player.DashMoveMultiplier, 0);
+
         player.stateTimer -= Time.deltaTime;
-        
-        if(player.stateTimer <= 0f)
+
+        if(player.stateTimer <=0 )
         {
             stateMachine.ChangeState(player.IdleState);
         }

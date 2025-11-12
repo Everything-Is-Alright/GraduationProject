@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     public PlayerJumpState JumpState { get; private set; }
     public PlayerFallState FallState { get; private set; }
     public PlayerRollState RollState { get; private set; }
+    public PlayerDashState DashState { get; private set; }
 
 
     [Header("Movement details")]
@@ -21,15 +22,24 @@ public class Player : MonoBehaviour
     public float InAirMoveMultuplier = .7f;
     public bool facingRight = true;
     [SerializeField]public float stateTimer;
+    public Vector2 playerDir;
 
     [Header("Roll detail")]
-    public Vector2 RollDir;
     public float RollMoveMultiplier = 1.5f;
+
+    [Header("Slide detail")]
+
+
+    [Header("Dash detail")]
+    public float DashMoveMultiplier = 2f;
+    
 
     [Header("collision detection")]
     [SerializeField] private float groundCheckDistance;
+    [SerializeField] private float wallCheckDistance;
     [SerializeField] private LayerMask whatIsGround;
     public bool groundDetected {  get; private set; }
+    public bool wallDected {  get; private set; }
 
     public Vector2 moveInput {  get; private set; }
 
@@ -46,6 +56,7 @@ public class Player : MonoBehaviour
         JumpState = new PlayerJumpState(this, stateMachine, "IsJumpFall");
         FallState = new PlayerFallState(this, stateMachine, "IsJumpFall");
         RollState = new PlayerRollState(this, stateMachine, "IsRoll");
+        DashState = new PlayerDashState(this, stateMachine, "IsDash");
     }
 
     private void OnEnable()
@@ -93,6 +104,7 @@ public class Player : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawLine(transform.position, transform.position + new Vector3(0, -groundCheckDistance, 0));
+        Gizmos.DrawLine(transform.position, transform.position + new Vector3(0, wallCheckDistance, 0));
     }
 
     private void HandleCollisionDetection()

@@ -24,5 +24,10 @@ public class PlayerAirState : EntityState
         {
             player.SetVelocity(player.moveInput.x * player.movespeed * player.InAirMoveMultuplier, player.rb.linearVelocityY);
         }
+
+        if ((player.stateTimer <= 0 && player.input.Player.Dash.WasPressedThisFrame()))
+        {
+            stateMachine.ChangeState(player.DashState);
+        }
     }
 }
