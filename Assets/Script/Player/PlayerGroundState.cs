@@ -40,5 +40,11 @@ public class PlayerGroundState : EntityState
         {
             stateMachine.ChangeState(player.DashState);
         }
+
+        if(player.input.Player.Attack.WasPressedThisFrame())
+        {
+            stateMachine.ChangeState(player.AttackState);
+        }
+
     }
 }

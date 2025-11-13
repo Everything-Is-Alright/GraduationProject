@@ -14,6 +14,9 @@ public class Player : MonoBehaviour
     public PlayerFallState FallState { get; private set; }
     public PlayerRollState RollState { get; private set; }
     public PlayerDashState DashState { get; private set; }
+    public PlayerWallSlideState WallSlideState { get; private set; }
+    public PlayerWallJumpState WallJumpState { get; private set; }
+    public PlayerAttackState AttackState { get; private set; }
 
 
     [Header("Movement details")]
@@ -21,8 +24,11 @@ public class Player : MonoBehaviour
     public float jumpspeed = 5;
     public float InAirMoveMultuplier = .7f;
     public bool facingRight = true;
+    public Vector2 wallJump;
+
     [SerializeField]public float stateTimer;
     public Vector2 playerDir;
+    public int playerFacing = 1;
 
     [Header("Roll detail")]
     public float RollMoveMultiplier = 1.5f;
@@ -38,8 +44,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float groundCheckDistance;
     [SerializeField] private float wallCheckDistance;
     [SerializeField] private LayerMask whatIsGround;
-    public bool groundDetected {  get; private set; }
-    public bool wallDected {  get; private set; }
+
+    [SerializeField]public bool groundDetected {  get; private set; }
+    [SerializeField]public bool wallDetected {  get; private set; }
 
     public Vector2 moveInput {  get; private set; }
 
@@ -57,6 +64,9 @@ public class Player : MonoBehaviour
         FallState = new PlayerFallState(this, stateMachine, "IsJumpFall");
         RollState = new PlayerRollState(this, stateMachine, "IsRoll");
         DashState = new PlayerDashState(this, stateMachine, "IsDash");
+        WallSlideState = new PlayerWallSlideState(this, stateMachine, "IsWallSlide");
+        WallJumpState = new PlayerWallJumpState(this, stateMachine, "IsJumpFall");
+        AttackState = new PlayerAttackState(this, stateMachine, "IsAttack");
     }
 
     private void OnEnable()
@@ -99,16 +109,20 @@ public class Player : MonoBehaviour
     {
         transform.Rotate(0, 180, 0);
         facingRight = !facingRight;
+        playerFacing = -playerFacing;
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawLine(transform.position, transform.position + new Vector3(0, -groundCheckDistance, 0));
-        Gizmos.DrawLine(transform.position, transform.position + new Vector3(0, wallCheckDistance, 0));
+        Gizmos.DrawLine(transform.position, transform.position + new Vector3(playerFacing * wallCheckDistance, 0, 0));
     }
 
     private void HandleCollisionDetection()
     {
         groundDetected = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, whatIsGround);
+        wallDetected = Physics2D.Raycast(transform.position, Vector2.right * playerFacing, wallCheckDistance, whatIsGround);
     }
+
+
 }

@@ -10,16 +10,6 @@ public class PlayerRollState : EntityState
     public override void Enter()
     {
         base.Enter();
-        
-        if(player.moveInput.x != 0)
-        {
-            player.playerDir = player.moveInput;
-        }
-        else
-        {
-            player.playerDir = player.facingRight ? Vector2.right : Vector2.left;
-        }
-
 
         player.stateTimer = rollDuration;
 
@@ -38,7 +28,7 @@ public class PlayerRollState : EntityState
     {
         base.Update();
 
-        player.SetVelocity(player.playerDir.x * player.movespeed * player.RollMoveMultiplier, player.rb.linearVelocityY);
+        player.SetVelocity(player.playerFacing * player.movespeed * player.RollMoveMultiplier, player.rb.linearVelocityY);
         
         player.stateTimer -= Time.deltaTime;
         

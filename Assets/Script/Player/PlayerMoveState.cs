@@ -26,6 +26,8 @@ public class PlayerMoveState : PlayerGroundState
         }
 
         player.SetVelocity(player.moveInput.x * player.movespeed, player.rb.linearVelocityY);
+
+        
     }
 }
     

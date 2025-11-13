@@ -12,15 +12,6 @@ public class PlayerDashState : EntityState
     {
         base.Enter();
 
-        if(player.moveInput.x != 0)
-        {
-            player.playerDir = player.moveInput;
-        }
-        else
-        {
-            player.playerDir = player.facingRight ? Vector2.right : Vector2.left;
-        }
-
         player.stateTimer = dashDuration;
     }
 
@@ -35,7 +26,7 @@ public class PlayerDashState : EntityState
     {
         base.Update();
 
-        player.SetVelocity(player.playerDir.x * player.movespeed * player.DashMoveMultiplier, 0);
+        player.SetVelocity(player.playerFacing * player.movespeed * player.DashMoveMultiplier, 0);
 
         player.stateTimer -= Time.deltaTime;
 

@@ -29,5 +29,6 @@ public class PlayerAirState : EntityState
         {
             stateMachine.ChangeState(player.DashState);
         }
+
     }
 }

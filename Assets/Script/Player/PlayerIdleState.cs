@@ -21,7 +21,7 @@ public class PlayerIdleState : PlayerGroundState
     {
         base.Update();
 
-        if(player.moveInput.x != 0)
+        if(player.moveInput.x != 0 && player.groundDetected)
         {
             stateMachine.ChangeState(player.MoveState);
         }
