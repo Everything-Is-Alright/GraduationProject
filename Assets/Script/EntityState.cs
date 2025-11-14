@@ -6,7 +6,7 @@ public abstract class EntityState
     protected Player player;
     protected StateMachine stateMachine;
     protected string animBoolName;
-    
+    protected bool triggerCalled;
     protected Animator anim;
 
 
@@ -20,6 +20,12 @@ public abstract class EntityState
     public virtual void Enter()
     {
         player.anim.SetBool(animBoolName,true);
+        triggerCalled = false;
+    }
+
+    public void CallAnimationTrigger()
+    {
+        triggerCalled = true;
     }
 
     public virtual void Update()

@@ -38,7 +38,6 @@ public class Player : MonoBehaviour
 
     [Header("Dash detail")]
     public float DashMoveMultiplier = 2f;
-    
 
     [Header("collision detection")]
     [SerializeField] private float groundCheckDistance;
@@ -124,5 +123,9 @@ public class Player : MonoBehaviour
         wallDetected = Physics2D.Raycast(transform.position, Vector2.right * playerFacing, wallCheckDistance, whatIsGround);
     }
 
+    public void CallAnimationTrigger()
+    {
+        stateMachine.currentState.CallAnimationTrigger();
+    }
 
 }

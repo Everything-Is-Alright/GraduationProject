@@ -20,6 +20,12 @@ public class PlayerAttackState : EntityState
     {
         base.Update();
 
-        stateMachine.ChangeState(player.IdleState);
+        player.SetVelocity(0,player.rb.linearVelocityY);
+
+
+        if (triggerCalled)
+        {
+            stateMachine.ChangeState(player.IdleState);
+        }
     }
 }
