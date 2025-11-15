@@ -16,6 +16,10 @@ public abstract class EntityState
         this.stateMachine = stateMachine;
         this.animBoolName = animBoolName;
     }
+    public void CallAnimationTrigger()
+    {
+        triggerCalled = true;
+    }
 
     public virtual void Enter()
     {
@@ -23,10 +27,6 @@ public abstract class EntityState
         triggerCalled = false;
     }
 
-    public void CallAnimationTrigger()
-    {
-        triggerCalled = true;
-    }
 
     public virtual void Update()
     {

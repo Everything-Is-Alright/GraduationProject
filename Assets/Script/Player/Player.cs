@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour 
@@ -38,6 +39,10 @@ public class Player : MonoBehaviour
 
     [Header("Dash detail")]
     public float DashMoveMultiplier = 2f;
+
+    [Header("Attack detail")]
+    public float comboResetTime = 1f;
+    public Coroutine queuedAttackCo;
 
     [Header("collision detection")]
     [SerializeField] private float groundCheckDistance;
@@ -128,4 +133,18 @@ public class Player : MonoBehaviour
         stateMachine.currentState.CallAnimationTrigger();
     }
 
+    public void EnterAttackStateWithDelay()
+    {
+        if(queuedAttackCo != null)
+        {
+            StopCoroutine(queuedAttackCo);
+        }
+
+        queuedAttackCo = StartCoroutine(EnterAttackStateWithDelayCo());
+    }
+    private IEnumerator EnterAttackStateWithDelayCo()
+    {
+        yield return new WaitForEndOfFrame();
+        stateMachine.ChangeState(AttackState);
+    }
 }
