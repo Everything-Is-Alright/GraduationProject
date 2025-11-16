@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     public PlayerWallSlideState WallSlideState { get; private set; }
     public PlayerWallJumpState WallJumpState { get; private set; }
     public PlayerAttackState AttackState { get; private set; }
+    public PlayerJumpAttackState JumpAttackState { get; private set; }
 
 
     [Header("Movement details")]
@@ -71,6 +72,7 @@ public class Player : MonoBehaviour
         WallSlideState = new PlayerWallSlideState(this, stateMachine, "IsWallSlide");
         WallJumpState = new PlayerWallJumpState(this, stateMachine, "IsJumpFall");
         AttackState = new PlayerAttackState(this, stateMachine, "IsAttack");
+        JumpAttackState = new PlayerJumpAttackState(this, stateMachine, "IsJumpAttack");
     }
 
     private void OnEnable()

@@ -30,5 +30,10 @@ public class PlayerAirState : EntityState
             stateMachine.ChangeState(player.DashState);
         }
 
+        if(player.input.Player.Attack.WasPressedThisFrame())
+        {
+            stateMachine.ChangeState(player.JumpAttackState);
+        }
+
     }
 }

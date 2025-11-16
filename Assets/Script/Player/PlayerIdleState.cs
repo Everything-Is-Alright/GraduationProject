@@ -21,6 +21,9 @@ public class PlayerIdleState : PlayerGroundState
     {
         base.Update();
 
+        if(player.moveInput.x == player.playerFacing && player.wallDetected)
+            return;
+
         if(player.moveInput.x != 0 && player.groundDetected)
         {
             stateMachine.ChangeState(player.MoveState);
