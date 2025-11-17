@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
 
     [Header("Movement details")]
     public float movespeed;
-    public float jumpspeed = 5;
+    public float jumpspeed = 12;
     public float InAirMoveMultuplier = .7f;
     public bool facingRight = true;
     public Vector2 wallJump;
