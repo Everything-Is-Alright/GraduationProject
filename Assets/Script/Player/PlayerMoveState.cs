@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerMoveState : PlayerGroundState
 {
-    public PlayerMoveState(Player player, StateMachine stateMachine, string stateName) : base(player, stateMachine, stateName)
+    public PlayerMoveState(Player player, StateMachine<Player> stateMachine, string stateName) : base(player, stateMachine, stateName)
     {
     }
 

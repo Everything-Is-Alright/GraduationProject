@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class PlayerGroundState : EntityState
+public class PlayerGroundState : EntityState<Player>
 {
-    public PlayerGroundState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerGroundState(Player player, StateMachine<Player> stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 

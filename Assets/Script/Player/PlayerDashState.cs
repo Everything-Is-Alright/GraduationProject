@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class PlayerDashState : EntityState
+public class PlayerDashState : EntityState<Player>
 {
-    public PlayerDashState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerDashState(Player player, StateMachine<Player> stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 

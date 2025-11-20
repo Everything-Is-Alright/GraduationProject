@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class PlayerJumpAttackState : EntityState
+public class PlayerJumpAttackState : EntityState<Player>
 {
-    public PlayerJumpAttackState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerJumpAttackState(Player player, StateMachine<Player> stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 

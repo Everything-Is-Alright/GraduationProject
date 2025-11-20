@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerAttackState : EntityState
+public class PlayerAttackState : EntityState<Player>
 {
     private int comboIndex = 1;
 
@@ -8,7 +8,7 @@ public class PlayerAttackState : EntityState
 
     private bool comboAttackQueued;
 
-    public PlayerAttackState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerAttackState(Player player, StateMachine<Player> stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 

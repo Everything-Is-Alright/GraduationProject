@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class PlayerRollState : EntityState
+public class PlayerRollState : EntityState<Player>
 {
-    public PlayerRollState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerRollState(Player player, StateMachine<Player> stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
     private float rollDuration = 0.6f;

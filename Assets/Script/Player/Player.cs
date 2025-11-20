@@ -1,13 +1,13 @@
 using System.Collections;
 using UnityEngine;
 
-public class Player : MonoBehaviour 
+public class Player : MonoBehaviour , IEntity
 {
 
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
     public PlayerInputSet input { get; private set; }
-    public StateMachine stateMachine;
+    public StateMachine<Player> stateMachine;
 
     public PlayerIdleState IdleState { get; private set; }
     public PlayerMoveState MoveState { get; private set; }

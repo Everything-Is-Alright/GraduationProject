@@ -1,18 +1,23 @@
 using UnityEngine;
 
-public abstract class EntityState
+public interface IEntity
+{
+    Animator anim { get; }
+    Rigidbody2D rb { get; }
+}
+
+public abstract class EntityState<T> where T : IEntity
 {
 
-    protected Player player;
-    protected StateMachine stateMachine;
+    protected T entity;
+    protected StateMachine<T> stateMachine;
     protected string animBoolName;
     protected bool triggerCalled;
-    protected Animator anim;
 
 
-    public EntityState(Player player,StateMachine stateMachine, string animBoolName )
+    public EntityState(T entity,StateMachine<T> stateMachine, string animBoolName )
     {
-        this.player = player;
+        this.entity = entity;
         this.stateMachine = stateMachine;
         this.animBoolName = animBoolName;
     }
@@ -23,18 +28,18 @@ public abstract class EntityState
 
     public virtual void Enter()
     {
-        player.anim.SetBool(animBoolName,true);
+        entity.anim.SetBool(animBoolName,true);
         triggerCalled = false;
     }
 
 
     public virtual void Update()
     {
-        player.anim.SetFloat("yVelocity", player.rb.linearVelocity.y);
+        entity.anim.SetFloat("yVelocity", player.rb.linearVelocity.y);
     }
 
     public virtual void Exit()
     {
-        player.anim.SetBool(animBoolName,false);
+        entity.anim.SetBool(animBoolName,false);
     }
 }

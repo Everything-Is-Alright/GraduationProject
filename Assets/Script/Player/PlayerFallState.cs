@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerFallState : PlayerAirState
 {
-    public PlayerFallState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerFallState(Player player, StateMachine<Player> stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 

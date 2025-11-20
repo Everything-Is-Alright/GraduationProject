@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class PlayerSlideState : EntityState
+public class PlayerSlideState : EntityState<Player>
 {
-    public PlayerSlideState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public PlayerSlideState(Player player, StateMachine<Player> stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 
