@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class SkeletonGroundState : EntityState<Player>
+public class SkeletonGroundState : EntityState<Skeleton>
 {
-    public SkeletonGroundState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public SkeletonGroundState(Skeleton skeleton, StateMachine<Skeleton> stateMachine, string animBoolName) : base(skeleton, stateMachine, animBoolName)
     {
     }
 
@@ -19,5 +19,7 @@ public class SkeletonGroundState : EntityState<Player>
     public override void Update()
     {
         base.Update();
+
+        
     }
 }

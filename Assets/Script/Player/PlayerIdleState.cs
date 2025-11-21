@@ -9,7 +9,7 @@ public class PlayerIdleState : PlayerGroundState
     public override void Enter()
     {
         base.Enter();
-        player.SetVelocity(0, player.rb.linearVelocityY);
+        entity.SetVelocity(0, entity.rb.linearVelocityY);
     }
 
     public override void Exit()
@@ -21,12 +21,12 @@ public class PlayerIdleState : PlayerGroundState
     {
         base.Update();
 
-        if(player.moveInput.x == player.playerFacing && player.wallDetected)
+        if(entity.moveInput.x == entity.playerFacing && entity.wallDetected)
             return;
 
-        if(player.moveInput.x != 0 && player.groundDetected)
+        if(entity.moveInput.x != 0 && entity.groundDetected)
         {
-            stateMachine.ChangeState(player.MoveState);
+            stateMachine.ChangeState(entity.MoveState);
         }
 
     }

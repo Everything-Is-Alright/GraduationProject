@@ -10,7 +10,7 @@ public class PlayerWallJumpState : EntityState<Player>
     {
         base.Enter();
 
-        player.SetVelocity(-player.playerFacing * player.movespeed, player.jumpspeed);
+        entity.SetVelocity(-entity.playerFacing * entity.movespeed, entity.jumpspeed);
     }
 
     public override void Exit()
@@ -22,19 +22,19 @@ public class PlayerWallJumpState : EntityState<Player>
     {
         base.Update();
 
-        if (player.wallDetected)
+        if (entity.wallDetected)
         {
-            stateMachine.ChangeState(player.WallSlideState);
+            stateMachine.ChangeState(entity.WallSlideState);
         }
 
-        if (player.groundDetected)
+        if (entity.groundDetected)
         {
-            stateMachine.ChangeState(player.IdleState);
+            stateMachine.ChangeState(entity.IdleState);
         }
 
-        if(player.input.Player.Dash.WasPressedThisFrame())
+        if(entity.input.Player.Dash.WasPressedThisFrame())
         {
-            stateMachine.ChangeState(player.DashState);
+            stateMachine.ChangeState(entity.DashState);
         }
     }
 }

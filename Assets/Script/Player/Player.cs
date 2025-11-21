@@ -60,7 +60,7 @@ public class Player : MonoBehaviour , IEntity
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
 
-        stateMachine = new StateMachine();
+        stateMachine = new StateMachine<Player>();
         input = new PlayerInputSet();
 
         IdleState = new PlayerIdleState(this, stateMachine, "IsIdle");
@@ -88,7 +88,7 @@ public class Player : MonoBehaviour , IEntity
         stateMachine.Initialize(IdleState);
     }
 
-    private void Update()
+    private void Update() 
     {
         HandleCollisionDetection();
         stateMachine.UpdateActiveState();

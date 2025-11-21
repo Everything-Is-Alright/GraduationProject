@@ -24,29 +24,29 @@ public class PlayerWallSlideState : EntityState<Player>
         base.Update();
 
         
-        if(player.moveInput.y < 0 )
+        if(entity.moveInput.y < 0 )
         {
-            player.SetVelocity(0, player.rb.linearVelocityY );
+            entity.SetVelocity(0, entity.rb.linearVelocityY );
         }
         else 
         {
-            player.SetVelocity(0, player.rb.linearVelocityY * 0.6f);
+            entity.SetVelocity(0, entity.rb.linearVelocityY * 0.6f);
         }
 
-        if (player.groundDetected)
+        if (entity.groundDetected)
         {
-            stateMachine.ChangeState(player.IdleState);
-            player.HandleFlip(-player.playerFacing);
+            stateMachine.ChangeState(entity.IdleState);
+            entity.HandleFlip(-entity.playerFacing);
         }
 
-        if(player.input.Player.Jump.WasPressedThisFrame())
+        if(entity.input.Player.Jump.WasPressedThisFrame())
         {
-            stateMachine.ChangeState(player.WallJumpState);
+            stateMachine.ChangeState(entity.WallJumpState);
         }
 
-        if(!player.wallDetected)
+        if(!entity.wallDetected)
         {
-            stateMachine.ChangeState(player.FallState);
+            stateMachine.ChangeState(entity.FallState);
         }
     }
 }

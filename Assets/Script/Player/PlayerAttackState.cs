@@ -17,17 +17,17 @@ public class PlayerAttackState : EntityState<Player>
         base.Enter();
 
         comboAttackQueued = false;
-        if (Time.time > lastTimeAttack + player.comboResetTime || comboIndex > 2)
+        if (Time.time > lastTimeAttack + entity.comboResetTime || comboIndex > 2)
         {
             comboIndex = 1;
         }
 
-        if (player.moveInput.x != player.playerFacing)
+        if (entity.moveInput.x != entity.playerFacing)
         {
-            player.HandleFlip(player.moveInput.x);
+            entity.HandleFlip(entity.moveInput.x);
         }
 
-        player.anim.SetInteger("BasicAttackIndex", comboIndex);
+        entity.anim.SetInteger("BasicAttackIndex", comboIndex);
     }
 
     public override void Exit()
@@ -43,9 +43,9 @@ public class PlayerAttackState : EntityState<Player>
     {
         base.Update();
 
-        player.SetVelocity(0,player.rb.linearVelocityY);
+        entity.SetVelocity(0, entity.rb.linearVelocityY);
 
-        if(player.input.Player.Attack.WasPressedThisFrame())
+        if(entity.input.Player.Attack.WasPressedThisFrame())
         {
             comboAttackQueued = true;
         }
@@ -54,12 +54,12 @@ public class PlayerAttackState : EntityState<Player>
         {
             if(comboAttackQueued)
             {
-                player.anim.SetBool(animBoolName, false);
-                player.EnterAttackStateWithDelay();
+                entity.anim.SetBool(animBoolName, false);
+                entity.EnterAttackStateWithDelay();
             }
             else
             {   
-                stateMachine.ChangeState(player.IdleState);
+                stateMachine.ChangeState(entity.IdleState);
             }
               
         }

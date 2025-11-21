@@ -22,17 +22,17 @@ public class PlayerJumpAttackState : EntityState<Player>
     public override void Update()
     {
         base.Update();
-        player.SetVelocity(0, player.rb.linearVelocityY);
+        entity.SetVelocity(0, entity.rb.linearVelocityY);
 
-        if(player.groundDetected && touchedGround == false)
+        if(entity.groundDetected && touchedGround == false)
         {
             touchedGround = true;
-            player.anim.SetTrigger("IsJumpAttackTrigger");
+            entity.anim.SetTrigger("IsJumpAttackTrigger");
         }
 
-        if (triggerCalled && player.groundDetected)
+        if (triggerCalled && entity.groundDetected)
         {
-            stateMachine.ChangeState(player.IdleState);
+            stateMachine.ChangeState(entity.IdleState);
         }
     }
 }

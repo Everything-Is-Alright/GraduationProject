@@ -12,27 +12,27 @@ public class PlayerDashState : EntityState<Player>
     {
         base.Enter();
 
-        player.stateTimer = dashDuration;
+        entity.stateTimer = dashDuration;
     }
 
     public override void Exit()
     {
         base.Exit();
 
-        player.stateTimer = 0;
+        entity.stateTimer = 0;
     }
 
     public override void Update()
     {
         base.Update();
 
-        player.SetVelocity(player.moveInput.x * player.movespeed * player.DashMoveMultiplier, 0);
+        entity.SetVelocity(entity.moveInput.x * entity.movespeed * entity.DashMoveMultiplier, 0);
 
-        player.stateTimer -= Time.deltaTime;
+        entity.stateTimer -= Time.deltaTime;
 
-        if(player.stateTimer <=0 )
+        if(entity.stateTimer <=0 )
         {
-            stateMachine.ChangeState(player.IdleState);
+            stateMachine.ChangeState(entity.IdleState);
         }
     }
 }

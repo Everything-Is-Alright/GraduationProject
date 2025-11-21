@@ -20,19 +20,19 @@ public class PlayerAirState : EntityState<Player>
     {
         base.Update();
 
-        if(player.moveInput.x != 0)
+        if(entity.moveInput.x != 0)
         {
-            player.SetVelocity(player.moveInput.x * player.movespeed * player.InAirMoveMultuplier, player.rb.linearVelocityY);
+            entity.SetVelocity(entity.moveInput.x * entity.movespeed * entity.InAirMoveMultuplier, entity.rb.linearVelocityY);
         }
 
-        if ((player.stateTimer <= 0 && player.input.Player.Dash.WasPressedThisFrame()))
+        if ((entity.stateTimer <= 0 && entity.input.Player.Dash.WasPressedThisFrame()))
         {
-            stateMachine.ChangeState(player.DashState);
+            stateMachine.ChangeState(entity.DashState);
         }
 
-        if(player.input.Player.Attack.WasPressedThisFrame())
+        if(entity.input.Player.Attack.WasPressedThisFrame())
         {
-            stateMachine.ChangeState(player.JumpAttackState);
+            stateMachine.ChangeState(entity.JumpAttackState);
         }
 
     }

@@ -35,7 +35,7 @@ public abstract class EntityState<T> where T : IEntity
 
     public virtual void Update()
     {
-        entity.anim.SetFloat("yVelocity", player.rb.linearVelocity.y);
+        entity.anim.SetFloat("yVelocity", entity.rb.linearVelocity.y);
     }
 
     public virtual void Exit()

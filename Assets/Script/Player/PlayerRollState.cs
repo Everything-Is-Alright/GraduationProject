@@ -11,30 +11,30 @@ public class PlayerRollState : EntityState<Player>
     {
         base.Enter();
 
-        player.stateTimer = rollDuration;
+        entity.stateTimer = rollDuration;
 
-        player.HandleFlip(player.playerDir.x);
+        entity.HandleFlip(entity.playerDir.x);
     }
 
     public override void Exit()
     {
         base.Exit();
 
-        player.SetVelocity(0, player.rb.linearVelocityY);
-        player.stateTimer = 0f;
+        entity.SetVelocity(0, entity.rb.linearVelocityY);
+        entity.stateTimer = 0f;
     }
 
     public override void Update()
     {
         base.Update();
 
-        player.SetVelocity(player.playerFacing * player.movespeed * player.RollMoveMultiplier, player.rb.linearVelocityY);
+        entity.SetVelocity(entity.playerFacing * entity.movespeed * entity.RollMoveMultiplier, entity.rb.linearVelocityY);
+
+        entity.stateTimer -= Time.deltaTime;
         
-        player.stateTimer -= Time.deltaTime;
-        
-        if(player.stateTimer <= 0f)
+        if(entity.stateTimer <= 0f)
         {
-            stateMachine.ChangeState(player.IdleState);
+            stateMachine.ChangeState(entity.IdleState);
         }
     }
 }

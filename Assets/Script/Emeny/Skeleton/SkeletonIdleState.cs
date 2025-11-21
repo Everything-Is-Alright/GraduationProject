@@ -1,14 +1,18 @@
 using UnityEngine;
 
-public class SkeletonIdleState : EntityState<Player>
+public class SkeletonIdleState : EntityState<Skeleton>
 {
-    public SkeletonIdleState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    private float IdleTimer = 3f;
+
+    public SkeletonIdleState(Skeleton skeleton, StateMachine<Skeleton> stateMachine, string animBoolName) : base(skeleton, stateMachine, animBoolName)
     {
     }
 
     public override void Enter()
     {
         base.Enter();
+        entity.stateTimer = IdleTimer;
+
     }
 
     public override void Exit()
@@ -19,5 +23,12 @@ public class SkeletonIdleState : EntityState<Player>
     public override void Update()
     {
         base.Update();
+        entity.stateTimer -= Time.deltaTime;
+
+        if (entity.stateTimer < 0)
+        {
+            entity.stateMachine.ChangeState(entity.WalkState);
+        }
+
     }
 }

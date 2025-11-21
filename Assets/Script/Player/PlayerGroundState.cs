@@ -21,29 +21,29 @@ public class PlayerGroundState : EntityState<Player>
     {
         base.Update();
 
-        if(player.rb.linearVelocityY < 0)
+        if(entity.rb.linearVelocityY < 0)
         {
-            stateMachine.ChangeState(player.FallState);
+            stateMachine.ChangeState(entity.FallState);
         }
 
-        if(player.stateTimer <= 0 && player.input.Player.Jump.WasPressedThisFrame())
+        if(entity.stateTimer <= 0 && entity.input.Player.Jump.WasPressedThisFrame())
         {
-            stateMachine.ChangeState(player.JumpState);
+            stateMachine.ChangeState(entity.JumpState);
         }
 
-        if((player.stateTimer <= 0 && player.input.Player.Roll.WasPressedThisFrame()) && player.groundDetected)
+        if((entity.stateTimer <= 0 && entity.input.Player.Roll.WasPressedThisFrame()) && entity.groundDetected)
         {
-            stateMachine.ChangeState(player.RollState);
+            stateMachine.ChangeState(entity.RollState);
         }
 
-        if((player.stateTimer <= 0 && player.input.Player.Dash.WasPressedThisFrame()))
+        if((entity.stateTimer <= 0 && entity.input.Player.Dash.WasPressedThisFrame()))
         {
-            stateMachine.ChangeState(player.DashState);
+            stateMachine.ChangeState(entity.DashState);
         }
 
-        if(player.input.Player.Attack.WasPressedThisFrame())
+        if(entity.input.Player.Attack.WasPressedThisFrame())
         {
-            stateMachine.ChangeState(player.AttackState);
+            stateMachine.ChangeState(entity.AttackState);
         }
 
     }
