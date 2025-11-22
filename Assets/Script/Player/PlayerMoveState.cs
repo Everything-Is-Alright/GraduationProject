@@ -25,7 +25,7 @@ public class PlayerMoveState : PlayerGroundState
             stateMachine.ChangeState(entity.IdleState);
         }
 
-        entity.SetVelocity(entity.moveInput.x * entity.movespeed, entity.rb.linearVelocityY);
+        entity.SetVelocity(entity.moveInput.x * entity.moveSpeed, entity.rb.linearVelocityY);
 
         
     }

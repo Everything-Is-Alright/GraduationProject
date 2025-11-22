@@ -12,6 +12,7 @@ public class SkeletonIdleState : EntityState<Skeleton>
     {
         base.Enter();
         entity.stateTimer = IdleTimer;
+        entity.SetVelocity(0, entity.rb.linearVelocityY);
 
     }
 
@@ -22,13 +23,19 @@ public class SkeletonIdleState : EntityState<Skeleton>
 
     public override void Update()
     {
+
         base.Update();
         entity.stateTimer -= Time.deltaTime;
 
+        Debug.Log(entity.groundDetected);
+
         if (entity.stateTimer < 0)
         {
-            entity.stateMachine.ChangeState(entity.WalkState);
+            if(!entity.cliffCheck)
+            {
+                entity.Flip();
+            }
+            stateMachine.ChangeState(entity.WalkState);
         }
-
     }
 }

@@ -28,7 +28,7 @@ public class PlayerRollState : EntityState<Player>
     {
         base.Update();
 
-        entity.SetVelocity(entity.playerFacing * entity.movespeed * entity.RollMoveMultiplier, entity.rb.linearVelocityY);
+        entity.SetVelocity(entity.entityFacing * entity.moveSpeed * entity.RollMoveMultiplier, entity.rb.linearVelocityY);
 
         entity.stateTimer -= Time.deltaTime;
         

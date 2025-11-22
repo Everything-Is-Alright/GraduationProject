@@ -26,7 +26,14 @@ public class PlayerDashState : EntityState<Player>
     {
         base.Update();
 
-        entity.SetVelocity(entity.moveInput.x * entity.movespeed * entity.DashMoveMultiplier, 0);
+        if(entity.moveInput.x != 0)
+        {
+            entity.SetVelocity(entity.moveInput.x * entity.moveSpeed * entity.DashMoveMultiplier, 0);
+        }
+        else
+        {
+            entity.SetVelocity(entity.entityFacing * entity.moveSpeed * entity.DashMoveMultiplier, 0);
+        }
 
         entity.stateTimer -= Time.deltaTime;
 

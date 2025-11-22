@@ -22,7 +22,7 @@ public class PlayerAirState : EntityState<Player>
 
         if(entity.moveInput.x != 0)
         {
-            entity.SetVelocity(entity.moveInput.x * entity.movespeed * entity.InAirMoveMultuplier, entity.rb.linearVelocityY);
+            entity.SetVelocity(entity.moveInput.x * entity.moveSpeed * entity.InAirMoveMultuplier, entity.rb.linearVelocityY);
         }
 
         if ((entity.stateTimer <= 0 && entity.input.Player.Dash.WasPressedThisFrame()))

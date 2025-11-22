@@ -10,7 +10,7 @@ public class PlayerWallJumpState : EntityState<Player>
     {
         base.Enter();
 
-        entity.SetVelocity(-entity.playerFacing * entity.movespeed, entity.jumpspeed);
+        entity.SetVelocity(-entity.entityFacing * entity.moveSpeed, entity.jumpSpeed);
     }
 
     public override void Exit()

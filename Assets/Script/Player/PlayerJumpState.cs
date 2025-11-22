@@ -10,7 +10,7 @@ public class PlayerJumpState : PlayerAirState
     {
         base.Enter();
 
-        entity.SetVelocity(entity.rb.linearVelocityX, entity.jumpspeed);
+        entity.SetVelocity(entity.rb.linearVelocityX, entity.jumpSpeed);
     }
 
     public override void Exit()

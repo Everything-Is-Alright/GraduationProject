@@ -21,7 +21,7 @@ public class PlayerIdleState : PlayerGroundState
     {
         base.Update();
 
-        if(entity.moveInput.x == entity.playerFacing && entity.wallDetected)
+        if(entity.moveInput.x == entity.entityFacing && entity.wallDetected)
             return;
 
         if(entity.moveInput.x != 0 && entity.groundDetected)

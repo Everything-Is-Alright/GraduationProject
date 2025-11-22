@@ -2,41 +2,70 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Accessibility;
 
-public class Skeleton : MonoBehaviour , IEntity
+public class Skeleton : Entity
 {
-    public Animator anim {  get; private set; }
-    public Rigidbody2D rb {  get; private set; }
-    public StateMachine<Skeleton> stateMachine;
+    private CapsuleCollider2D capsuleCollider;
+    public StateMachine<Skeleton> stateMachine { get; private set; }
 
-    [Header(" details")]
+    [Header("Movement details")]
     [SerializeField] public float moveSpeed;
 
-    public float stateTimer;
+    [Header("Collision detail")]
+    public bool cliffCheck;
+    [SerializeField] private float cliffDistance;
+    private Vector2 cliffCheckPosition;
 
     public SkeletonIdleState IdleState {  get; private set; }
     public SkeletonWalkState WalkState {  get; private set; }
 
-    public void Awake()
+    protected override void Awake()
     {
-        anim = GetComponentInChildren<Animator>();
-        rb = GetComponent<Rigidbody2D>();
+        base.Awake();
+
         stateMachine = new StateMachine<Skeleton>();
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
 
         IdleState = new SkeletonIdleState(this, stateMachine, "IsIdle");
         WalkState = new SkeletonWalkState(this, stateMachine, "IsWalk");
     }
 
-    public void Start()
+    private void Start()
     {        
         stateMachine.Initialize(IdleState);
     }
-    public void Update()
+    private void Update()
     {
+        HandleCollisionDetection();
+
         stateMachine.UpdateActiveState();
     }
 
     public void SetVelocity(float xVelocity, float yVelocity)
     {
         rb.linearVelocity = new Vector2 (xVelocity, yVelocity);
+    }
+
+    private void OnDrawGizmos()
+    {
+        CliffCheck();
+        Gizmos.DrawLine(transform.position, transform.position + new Vector3(0, -groundCheckDistance, 0));
+        Gizmos.DrawLine(transform.position, transform.position + new Vector3(entityFacing * wallCheckDistance, 0, 0));
+        Gizmos.DrawLine(cliffCheckPosition, cliffCheckPosition + new Vector2(0, -cliffDistance));
+    }
+
+    private void HandleCollisionDetection()
+    {
+        CliffCheck();
+        groundDetected = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, whatIsGround);
+        wallDetected = Physics2D.Raycast(transform.position, Vector2.right * entityFacing, wallCheckDistance, whatIsGround);
+        cliffCheck = Physics2D.Raycast(cliffCheckPosition, Vector2.down, cliffDistance, whatIsGround);
+    }
+
+    private void CliffCheck()
+    {
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
+        float cliffCheckx = transform.position.x + (capsuleCollider.size.x / 2 * entityFacing);
+        float cliffChecky = transform.position.y - capsuleCollider.size.y / 2;
+        cliffCheckPosition = new Vector2(cliffCheckx,cliffChecky);
     }
 }

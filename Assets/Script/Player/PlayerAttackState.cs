@@ -22,7 +22,7 @@ public class PlayerAttackState : EntityState<Player>
             comboIndex = 1;
         }
 
-        if (entity.moveInput.x != entity.playerFacing)
+        if (entity.moveInput.x != entity.entityFacing)
         {
             entity.HandleFlip(entity.moveInput.x);
         }
