@@ -1,12 +1,11 @@
 using UnityEngine;
 
-public interface IEntity
+public interface IEntityState
 {
     Animator anim { get; }
     Rigidbody2D rb { get; }
 }
-
-public abstract class EntityState<T> where T : IEntity
+public abstract class EntityState<T> where T : IEntityState
 {
 
     protected T entity;

@@ -2,10 +2,9 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Accessibility;
 
-public class Skeleton : Entity
+public class Skeleton : Entity<Skeleton>
 {
     private CapsuleCollider2D capsuleCollider;
-    public StateMachine<Skeleton> stateMachine { get; private set; }
 
     [Header("Movement details")]
     [SerializeField] public float moveSpeed;

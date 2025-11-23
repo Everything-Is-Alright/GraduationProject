@@ -2,10 +2,15 @@ using System.Xml.Serialization;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
-public abstract class Entity : MonoBehaviour , IEntity
+public interface IEntity
+{
+    void CallAnimationTrigger();
+}
+public abstract class Entity<T> : MonoBehaviour, IEntity, IEntityState where T : Entity<T>
 {
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
+    public StateMachine<T> stateMachine { get; set; }
     public float stateTimer;
     public bool facingRight = true;
 
@@ -41,5 +46,8 @@ public abstract class Entity : MonoBehaviour , IEntity
         entityFacing = -entityFacing;
     }
 
-    
+    public void CallAnimationTrigger()
+    {
+        stateMachine.currentState.CallAnimationTrigger();
+    }
 }

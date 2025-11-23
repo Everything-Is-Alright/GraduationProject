@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class StateMachine<T> where T : IEntity
+public class StateMachine<T> where T : IEntityState
 {
     public EntityState<T> currentState {  get; private set; }
 

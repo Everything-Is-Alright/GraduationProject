@@ -1,10 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
-public class Player : Entity
+public class Player : Entity<Player>
 {
     public PlayerInputSet input { get; private set; }
-    public StateMachine<Player> stateMachine { get; private set; }
 
     public PlayerIdleState IdleState { get; private set; }
     public PlayerMoveState MoveState { get; private set; }
@@ -103,13 +102,6 @@ public class Player : Entity
     {
         Gizmos.DrawLine(transform.position, transform.position + new Vector3(0, -groundCheckDistance, 0));
         Gizmos.DrawLine(transform.position, transform.position + new Vector3(entityFacing * wallCheckDistance, 0, 0));
-    }
-
-    
-
-    public void CallAnimationTrigger()
-    {
-        stateMachine.currentState.CallAnimationTrigger();
     }
 
     public void EnterAttackStateWithDelay()
