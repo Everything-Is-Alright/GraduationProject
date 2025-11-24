@@ -14,8 +14,14 @@ public class Skeleton : Entity<Skeleton>
     [SerializeField] private float cliffDistance;
     private Vector2 cliffCheckPosition;
 
+    [Header("Player detection")]
+    [SerializeField] private LayerMask whatIsPlayer;
+    [SerializeField] private float playerCheckDistance;
+
     public SkeletonIdleState IdleState {  get; private set; }
     public SkeletonWalkState WalkState {  get; private set; }
+    public SkeletonAttackState AttackState { get; private set; }
+    public EnemyBattleState BattleState { get; private set; }
 
     protected override void Awake()
     {
@@ -26,6 +32,8 @@ public class Skeleton : Entity<Skeleton>
 
         IdleState = new SkeletonIdleState(this, stateMachine, "IsIdle");
         WalkState = new SkeletonWalkState(this, stateMachine, "IsWalk");
+        AttackState = new SkeletonAttackState(this, stateMachine, "IsAttack");
+        BattleState = new EnemyBattleState(this, stateMachine, "IsBattle");
     }
 
     private void Start()
@@ -50,6 +58,7 @@ public class Skeleton : Entity<Skeleton>
         Gizmos.DrawLine(transform.position, transform.position + new Vector3(0, -groundCheckDistance, 0));
         Gizmos.DrawLine(transform.position, transform.position + new Vector3(entityFacing * wallCheckDistance, 0, 0));
         Gizmos.DrawLine(cliffCheckPosition, cliffCheckPosition + new Vector2(0, -cliffDistance));
+        Gizmos.DrawLine(transform.position, new Vector2(transform.position.x + entityFacing * playerCheckDistance, transform.position.y));
     }
 
     private void HandleCollisionDetection()
@@ -66,5 +75,17 @@ public class Skeleton : Entity<Skeleton>
         float cliffCheckx = transform.position.x + (capsuleCollider.size.x / 2 * entityFacing);
         float cliffChecky = transform.position.y - capsuleCollider.size.y / 2;
         cliffCheckPosition = new Vector2(cliffCheckx,cliffChecky);
+    }
+
+    public RaycastHit2D PlayerDetection()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right * entityFacing, playerCheckDistance, whatIsPlayer | whatIsGround);
+
+        if (hit.collider == null || hit.collider.gameObject.layer != LayerMask.NameToLayer("Player"))
+        {
+            return default;
+        }
+
+        return hit;
     }
 }

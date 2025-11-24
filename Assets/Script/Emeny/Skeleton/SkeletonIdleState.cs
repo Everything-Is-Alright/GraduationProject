@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SkeletonIdleState : EntityState<Skeleton>
+public class SkeletonIdleState : EnemyGroundState
 {
     private float IdleTimer = 3f;
 
@@ -27,7 +27,6 @@ public class SkeletonIdleState : EntityState<Skeleton>
         base.Update();
         entity.stateTimer -= Time.deltaTime;
 
-        Debug.Log(entity.groundDetected);
 
         if (entity.stateTimer < 0)
         {

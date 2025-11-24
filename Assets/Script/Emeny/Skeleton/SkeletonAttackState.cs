@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SkeletonAttackState : EntityState<Skeleton>
+public class SkeletonAttackState : EnemyGroundState
 {
     public SkeletonAttackState(Skeleton skeleton, StateMachine<Skeleton> stateMachine, string animBoolName) : base(skeleton, stateMachine, animBoolName)
     {
@@ -19,5 +19,9 @@ public class SkeletonAttackState : EntityState<Skeleton>
     public override void Update()
     {
         base.Update();
+        if (triggerCalled)
+        {
+            stateMachine.ChangeState(entity.IdleState);
+        }
     }
 }

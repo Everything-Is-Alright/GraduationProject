@@ -1,7 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class SkeletonWalkState : EntityState<Skeleton>
+public class SkeletonWalkState : EnemyGroundState
 {
     public SkeletonWalkState(Skeleton skeleton, StateMachine<Skeleton> stateMachine, string animBoolName) : base(skeleton, stateMachine, animBoolName)
     {
