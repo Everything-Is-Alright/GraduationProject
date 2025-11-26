@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 483229601}
   - component: {fileID: 483229600}
   - component: {fileID: 483229602}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Animtion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -428,7 +428,7 @@ GameObject:
   - component: {fileID: 518604323}
   - component: {fileID: 518604325}
   - component: {fileID: 518604324}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -460,6 +460,8 @@ MonoBehaviour:
   moveSpeed: 2.5
   cliffCheck: 0
   cliffDistance: 0.22
+  battleMoveSpeed: 3
+  attackDistance: 2
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 8
