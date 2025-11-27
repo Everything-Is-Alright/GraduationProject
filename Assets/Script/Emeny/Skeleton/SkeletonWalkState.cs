@@ -1,7 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class SkeletonWalkState : EnemyGroundState
+public class SkeletonWalkState : SkeletonGroundState
 {
     public SkeletonWalkState(Skeleton skeleton, StateMachine<Skeleton> stateMachine, string animBoolName) : base(skeleton, stateMachine, animBoolName)
     {
@@ -10,6 +10,7 @@ public class SkeletonWalkState : EnemyGroundState
     public override void Enter()
     {
         base.Enter();
+        Debug.Log("进入行走");
     }
 
     public override void Exit()

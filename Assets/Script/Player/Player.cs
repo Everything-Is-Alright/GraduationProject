@@ -80,9 +80,9 @@ public class Player : Entity<Player>
         stateMachine.UpdateActiveState();
     }
 
-    public void SetVelocity(float xVelocity, float yVelocity)
+    public override void SetVelocity(float xVelocity, float yVelocity)
     {
-        rb.linearVelocity = new Vector2(xVelocity, yVelocity);
+        base.SetVelocity(xVelocity, yVelocity);
         HandleFlip(xVelocity);
     }
 

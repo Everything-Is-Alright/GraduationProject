@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SkeletonIdleState : EnemyGroundState
+public class SkeletonIdleState : SkeletonGroundState
 {
     private float IdleTimer = 3f;
 
@@ -13,6 +13,7 @@ public class SkeletonIdleState : EnemyGroundState
         base.Enter();
         entity.stateTimer = IdleTimer;
         entity.SetVelocity(0, entity.rb.linearVelocityY);
+        Debug.Log("Ω¯»Î’æ¡¢");
 
     }
 
@@ -26,7 +27,6 @@ public class SkeletonIdleState : EnemyGroundState
 
         base.Update();
         entity.stateTimer -= Time.deltaTime;
-
 
         if (entity.stateTimer < 0)
         {

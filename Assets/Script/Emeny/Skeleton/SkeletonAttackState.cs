@@ -1,7 +1,10 @@
 using UnityEngine;
 
-public class SkeletonAttackState : EnemyGroundState
+public class SkeletonAttackState : SkeletonGroundState
 {
+
+    public float attackCooldown = 0.8f;
+    public float attackCooldownTimer;
     public SkeletonAttackState(Skeleton skeleton, StateMachine<Skeleton> stateMachine, string animBoolName) : base(skeleton, stateMachine, animBoolName)
     {
     }
@@ -9,6 +12,7 @@ public class SkeletonAttackState : EnemyGroundState
     public override void Enter()
     {
         base.Enter();
+        Debug.Log("½øÈë¹¥»÷");
     }
 
     public override void Exit()
@@ -19,6 +23,7 @@ public class SkeletonAttackState : EnemyGroundState
     public override void Update()
     {
         base.Update();
+        entity.SetVelocity(0, 0);
         if (triggerCalled)
         {
             stateMachine.ChangeState(entity.IdleState);

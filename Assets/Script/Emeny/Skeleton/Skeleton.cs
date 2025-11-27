@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Accessibility;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class Skeleton : Entity<Skeleton>
 {
@@ -25,7 +26,7 @@ public class Skeleton : Entity<Skeleton>
     public SkeletonIdleState IdleState {  get; private set; }
     public SkeletonWalkState WalkState {  get; private set; }
     public SkeletonAttackState AttackState { get; private set; }
-    public EnemyBattleState BattleState { get; private set; }
+    public SkeletonBattleState BattleState { get; private set; }
 
     protected override void Awake()
     {
@@ -37,7 +38,7 @@ public class Skeleton : Entity<Skeleton>
         IdleState = new SkeletonIdleState(this, stateMachine, "IsIdle");
         WalkState = new SkeletonWalkState(this, stateMachine, "IsWalk");
         AttackState = new SkeletonAttackState(this, stateMachine, "IsAttack");
-        BattleState = new EnemyBattleState(this, stateMachine, "IsBattle");
+        BattleState = new SkeletonBattleState(this, stateMachine, "IsBattle");
     }
 
     private void Start()
@@ -49,11 +50,7 @@ public class Skeleton : Entity<Skeleton>
         HandleCollisionDetection();
 
         stateMachine.UpdateActiveState();
-    }
-
-    public void SetVelocity(float xVelocity, float yVelocity)
-    {
-        rb.linearVelocity = new Vector2 (xVelocity, yVelocity);
+        anim.SetFloat("xVelocity", rb.linearVelocityX);
     }
 
     private void OnDrawGizmos()

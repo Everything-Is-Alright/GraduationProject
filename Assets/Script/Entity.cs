@@ -46,6 +46,11 @@ public abstract class Entity<T> : MonoBehaviour, IEntity, IEntityState where T :
         entityFacing = -entityFacing;
     }
 
+    public virtual void SetVelocity(float xVelocity, float yVelocity)
+    {
+        rb.linearVelocity = new Vector2(xVelocity, yVelocity);
+    }
+
     public void CallAnimationTrigger()
     {
         stateMachine.currentState.CallAnimationTrigger();
