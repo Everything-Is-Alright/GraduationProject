@@ -3,6 +3,7 @@ using UnityEngine;
 public class SkeletonBattleState : EntityState<Skeleton>
 {
     private Transform player;
+    private float lastTimeInBattleState;
     public SkeletonBattleState(Skeleton skeleton, StateMachine<Skeleton> stateMachine, string animBoolName) : base(skeleton, stateMachine, animBoolName)
     {
     }
@@ -25,6 +26,22 @@ public class SkeletonBattleState : EntityState<Skeleton>
     public override void Update()
     {
         base.Update();
+
+        if(entity.entityFacing != DirectionToPlayer())
+        {
+            entity.Flip();
+        }
+
+        if(entity.PlayerDetection() == true)
+        {
+            UpdateBattleTimer();
+        }
+
+        if(BattleTimeIsOver())
+        {
+            entity.stateMachine.ChangeState(entity.IdleState);
+        }
+
         if (player == null || !entity.cliffCheck)
         {
             entity.SetVelocity(0, entity.rb.linearVelocity.y); 
@@ -51,6 +68,8 @@ public class SkeletonBattleState : EntityState<Skeleton>
         return Mathf.Abs(player.position.x - entity.transform.position.x);
     }
 
+    private void UpdateBattleTimer() => lastTimeInBattleState = Time.time;
+    private bool BattleTimeIsOver() => Time.time > lastTimeInBattleState + entity.battleTimerDuration;
     private bool WithinAttackRange() => DistanceToPlayer() < entity.attackDistance;
 
     private int DirectionToPlayer()
@@ -62,4 +81,5 @@ public class SkeletonBattleState : EntityState<Skeleton>
 
         return player.position.x > entity.transform.position.x ? 1 : -1;
     }
+
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SkeletonAttackState : SkeletonGroundState
+public class SkeletonAttackState : EntityState<Skeleton>
 {
 
     public float attackCooldown = 0.8f;
@@ -26,7 +26,7 @@ public class SkeletonAttackState : SkeletonGroundState
         entity.SetVelocity(0, 0);
         if (triggerCalled)
         {
-            stateMachine.ChangeState(entity.IdleState);
+            stateMachine.ChangeState(entity.BattleState);
         }
     }
 }

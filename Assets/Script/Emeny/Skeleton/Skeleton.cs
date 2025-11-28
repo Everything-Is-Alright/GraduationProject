@@ -18,6 +18,7 @@ public class Skeleton : Entity<Skeleton>
     [Header("Battle details")]
     public float battleMoveSpeed = 3;
     public float attackDistance = 2;
+    public float battleTimerDuration = 5;
 
     [Header("Player detection")]
     [SerializeField] private LayerMask whatIsPlayer;
@@ -45,7 +46,7 @@ public class Skeleton : Entity<Skeleton>
     {        
         stateMachine.Initialize(IdleState);
     }
-    private void Update()
+    protected virtual void Update()
     {
         HandleCollisionDetection();
 
