@@ -10,7 +10,6 @@ public class SkeletonWalkState : SkeletonGroundState
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("进入行走");
     }
 
     public override void Exit()

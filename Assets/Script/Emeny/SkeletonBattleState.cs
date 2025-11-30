@@ -42,6 +42,12 @@ public class SkeletonBattleState : EntityState<Skeleton>
             entity.stateMachine.ChangeState(entity.IdleState);
         }
 
+        if(CouldRetreat())
+        {
+            entity.rb.linearVelocity = new Vector2(entity.retreatVelocity.x * DirectionToPlayer(), entity.retreatVelocity.y);
+            entity.HandleFlip(DirectionToPlayer());
+        }
+
         if (player == null || !entity.cliffCheck)
         {
             entity.SetVelocity(0, entity.rb.linearVelocity.y); 
@@ -70,6 +76,7 @@ public class SkeletonBattleState : EntityState<Skeleton>
 
     private void UpdateBattleTimer() => lastTimeInBattleState = Time.time;
     private bool BattleTimeIsOver() => Time.time > lastTimeInBattleState + entity.battleTimerDuration;
+    private bool CouldRetreat() => DistanceToPlayer() < entity.retreatDistance;
     private bool WithinAttackRange() => DistanceToPlayer() < entity.attackDistance;
 
     private int DirectionToPlayer()

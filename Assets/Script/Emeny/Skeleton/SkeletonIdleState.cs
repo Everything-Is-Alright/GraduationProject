@@ -13,7 +13,6 @@ public class SkeletonIdleState : SkeletonGroundState
         base.Enter();
         entity.stateTimer = IdleTimer;
         entity.SetVelocity(0, entity.rb.linearVelocityY);
-        Debug.Log("Ω¯»Î’æ¡¢");
 
     }
 

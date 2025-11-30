@@ -55,4 +55,16 @@ public abstract class Entity<T> : MonoBehaviour, IEntity, IEntityState where T :
     {
         stateMachine.currentState.CallAnimationTrigger();
     }
+
+    public void HandleFlip(float xVelocity)
+    {
+        if (xVelocity > 0 && facingRight == false)
+        {
+            Flip();
+        }
+        else if (xVelocity < 0 && facingRight == true)
+        {
+            Flip();
+        }
+    }
 }

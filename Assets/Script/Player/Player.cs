@@ -86,18 +86,6 @@ public class Player : Entity<Player>
         HandleFlip(xVelocity);
     }
 
-    public void HandleFlip(float xVelocity)
-    {
-        if(xVelocity > 0 && facingRight == false)
-        {
-            Flip();
-        }
-        else if(xVelocity < 0 && facingRight == true)
-        {
-            Flip();
-        }
-    }
-
     private void OnDrawGizmos()
     {
         Gizmos.DrawLine(transform.position, transform.position + new Vector3(0, -groundCheckDistance, 0));

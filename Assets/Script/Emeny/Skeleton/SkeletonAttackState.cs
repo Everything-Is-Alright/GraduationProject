@@ -12,7 +12,6 @@ public class SkeletonAttackState : EntityState<Skeleton>
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("½øÈë¹¥»÷");
     }
 
     public override void Exit()

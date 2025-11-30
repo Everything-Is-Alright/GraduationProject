@@ -19,6 +19,8 @@ public class Skeleton : Entity<Skeleton>
     public float battleMoveSpeed = 3;
     public float attackDistance = 2;
     public float battleTimerDuration = 5;
+    public float retreatDistance = 1;
+    public Vector2 retreatVelocity;
 
     [Header("Player detection")]
     [SerializeField] private LayerMask whatIsPlayer;
@@ -62,6 +64,7 @@ public class Skeleton : Entity<Skeleton>
         Gizmos.DrawLine(cliffCheckPosition, cliffCheckPosition + new Vector2(0, -cliffDistance));
         Gizmos.DrawLine(transform.position, new Vector2(transform.position.x + entityFacing * playerCheckDistance, transform.position.y));
         Gizmos.DrawLine(transform.position, new Vector2(transform.position.x + entityFacing * attackDistance, transform.position.y));
+        Gizmos.DrawLine(transform.position, new Vector2(transform.position.x + entityFacing * retreatDistance, transform.position.y));
     }
 
     private void HandleCollisionDetection()
