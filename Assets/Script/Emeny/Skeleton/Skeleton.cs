@@ -35,7 +35,6 @@ public class Skeleton : Entity<Skeleton>
     {
         base.Awake();
 
-        stateMachine = new StateMachine<Skeleton>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
 
         IdleState = new SkeletonIdleState(this, stateMachine, "IsIdle");

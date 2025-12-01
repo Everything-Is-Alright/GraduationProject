@@ -21,7 +21,7 @@ public class PlayerGroundState : EntityState<Player>
     {
         base.Update();
 
-        if(entity.rb.linearVelocityY < 0)
+        if (entity.rb.linearVelocityY < 0)
         {
             stateMachine.ChangeState(entity.FallState);
         }
@@ -45,6 +45,5 @@ public class PlayerGroundState : EntityState<Player>
         {
             stateMachine.ChangeState(entity.AttackState);
         }
-
     }
 }

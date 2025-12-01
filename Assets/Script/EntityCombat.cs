@@ -8,9 +8,14 @@ public class EntityCombat : MonoBehaviour
     [SerializeField] private float targetCheckRadius;
     [SerializeField] private LayerMask whatIsTraget;
 
+    public float damage = 30;
     public void PerformAttack()
     {
-        GetDetectedColliders();
+        foreach(var target in GetDetectedColliders())
+        {
+            EntityHealth targetHealth = target.GetComponent<EntityHealth>();
+            targetHealth?.TakeDamage(damage);
+        }
     }
 
     private Collider2D[] GetDetectedColliders()

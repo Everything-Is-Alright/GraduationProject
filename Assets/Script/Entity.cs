@@ -21,7 +21,6 @@ public abstract class Entity<T> : MonoBehaviour, IEntity, IEntityState where T :
     [SerializeField] public bool groundDetected;
     [SerializeField] public bool wallDetected;
 
-
     public int entityFacing = 1;
 
 
@@ -29,6 +28,7 @@ public abstract class Entity<T> : MonoBehaviour, IEntity, IEntityState where T :
     {
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        stateMachine = new StateMachine<T>();
     }
     void Start()
     {

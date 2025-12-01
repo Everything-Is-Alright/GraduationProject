@@ -15,7 +15,7 @@ public class Player : Entity<Player>
     public PlayerWallJumpState WallJumpState { get; private set; }
     public PlayerAttackState AttackState { get; private set; }
     public PlayerJumpAttackState JumpAttackState { get; private set; }
-
+    public PlayerDeathState playerDeathState { get; private set; }
 
     [Header("Movement details")]
     public float moveSpeed;
@@ -47,7 +47,6 @@ public class Player : Entity<Player>
     {
         base.Awake();
         input = new PlayerInputSet();
-        stateMachine = new StateMachine<Player>();
 
         IdleState = new PlayerIdleState(this, stateMachine, "IsIdle");
         MoveState = new PlayerMoveState(this, stateMachine, "IsMove");
@@ -59,6 +58,7 @@ public class Player : Entity<Player>
         WallJumpState = new PlayerWallJumpState(this, stateMachine, "IsJumpFall");
         AttackState = new PlayerAttackState(this, stateMachine, "IsAttack");
         JumpAttackState = new PlayerJumpAttackState(this, stateMachine, "IsJumpAttack");
+        playerDeathState = new PlayerDeathState(this, stateMachine, "IsDie");
     }
 
     private void OnEnable()
