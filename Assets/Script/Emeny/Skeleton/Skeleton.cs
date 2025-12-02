@@ -1,4 +1,6 @@
 using JetBrains.Annotations;
+using System.Diagnostics;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Accessibility;
 using static UnityEngine.EventSystems.EventTrigger;
@@ -25,6 +27,8 @@ public class Skeleton : Entity<Skeleton>
     [Header("Player detection")]
     [SerializeField] private LayerMask whatIsPlayer;
     [SerializeField] private float playerCheckDistance;
+
+    public Transform player { get; private set; }
 
     public SkeletonIdleState IdleState {  get; private set; }
     public SkeletonWalkState WalkState {  get; private set; }
@@ -53,6 +57,16 @@ public class Skeleton : Entity<Skeleton>
 
         stateMachine.UpdateActiveState();
         anim.SetFloat("xVelocity", rb.linearVelocityX);
+    }
+
+    public Transform GetPlayerRefence()
+    {
+        if (player == null)
+        {
+            player = PlayerDetection().transform;
+        }
+
+        return player; 
     }
 
     private void OnDrawGizmos()
@@ -92,5 +106,16 @@ public class Skeleton : Entity<Skeleton>
         }
 
         return hit;
+    }
+
+    public void TryEnterBattleState(Transform player)
+    {
+        if (stateMachine.currentState ==  BattleState || stateMachine.currentState == AttackState)
+        {
+            return;
+        }
+        this.player = player;
+        UnityEngine.Debug.Log("±»¹¥»÷ÁË!");
+        stateMachine.ChangeState(BattleState);
     }
 }

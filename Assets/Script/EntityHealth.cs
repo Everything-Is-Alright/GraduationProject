@@ -5,11 +5,19 @@ public class EntityHealth : MonoBehaviour
     [SerializeField] protected float maxHp = 100;
     [SerializeField] protected bool isDead;
 
-    public virtual void TakeDamage(float damage)
+    private EntityVFX entityvfx;
+
+    protected virtual void Awake()
+    {
+        entityvfx = GetComponent<EntityVFX>();
+    }
+
+    public virtual void TakeDamage(float damage, Transform damageDealer)
     {
         if (isDead)
             return;
 
+        entityvfx.PlayerOnDamageVfx();
         ReduceHp(damage);
     }
 

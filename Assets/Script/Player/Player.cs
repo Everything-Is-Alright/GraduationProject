@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Player : Entity<Player>
 {
+    public Transform player;
+
     public PlayerInputSet input { get; private set; }
 
     public PlayerIdleState IdleState { get; private set; }

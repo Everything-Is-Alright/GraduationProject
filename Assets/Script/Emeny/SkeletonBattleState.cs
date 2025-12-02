@@ -11,11 +11,13 @@ public class SkeletonBattleState : EntityState<Skeleton>
     public override void Enter()
     {
         base.Enter();
+        UpdateBattleTimer();
 
         if(player == null)
         {
-            player = entity.PlayerDetection().transform;
+            player = entity.GetPlayerRefence();
         }
+
     }
 
     public override void Exit()
