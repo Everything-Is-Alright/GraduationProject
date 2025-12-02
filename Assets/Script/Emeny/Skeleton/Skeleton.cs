@@ -51,6 +51,7 @@ public class Skeleton : Entity<Skeleton>
     {        
         stateMachine.Initialize(IdleState);
     }
+
     protected virtual void Update()
     {
         HandleCollisionDetection();
