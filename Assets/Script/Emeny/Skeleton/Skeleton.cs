@@ -115,7 +115,6 @@ public class Skeleton : Entity<Skeleton>
             return;
         }
         this.player = player;
-        UnityEngine.Debug.Log("±»¹¥»÷ÁË!");
         stateMachine.ChangeState(BattleState);
     }
 }

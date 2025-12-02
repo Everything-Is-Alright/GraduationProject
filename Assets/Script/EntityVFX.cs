@@ -34,7 +34,6 @@ public class EntityVFX : MonoBehaviour
     {
         sr.material = onDamageMaterial;
         yield return new WaitForSeconds(onDamageDuration);
-
         sr.material = originalMaterial;
     }
 }
