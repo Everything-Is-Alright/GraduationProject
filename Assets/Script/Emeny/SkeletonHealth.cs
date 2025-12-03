@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SkeletonHealth : EntityHealth
@@ -27,5 +28,11 @@ public class SkeletonHealth : EntityHealth
 
         skeleton.ReciveKnockback(onDamageKnockback, knockbackDuration);
         base.TakeDamage(damage, damageDealer);
+    }
+
+    protected override void Die()
+    {
+        base.Die();
+        Entity<Skeleton>.instance.EntityDeath();
     }
 }

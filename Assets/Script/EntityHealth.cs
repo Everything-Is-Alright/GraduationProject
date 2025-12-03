@@ -6,7 +6,6 @@ public class EntityHealth : MonoBehaviour
     [SerializeField] public bool isDead;
 
     private EntityVFX entityvfx;
-
     protected virtual void Awake()
     {
         entityvfx = GetComponent<EntityVFX>();
@@ -31,9 +30,8 @@ public class EntityHealth : MonoBehaviour
         }
     }
 
-    protected void Die()
+    protected virtual void Die()
     {
         isDead = true;
-        Debug.Log("YOU DIE!");
     }
 }

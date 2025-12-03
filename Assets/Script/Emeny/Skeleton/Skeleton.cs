@@ -35,6 +35,7 @@ public class Skeleton : Entity<Skeleton>
     public SkeletonWalkState WalkState {  get; private set; }
     public SkeletonAttackState AttackState { get; private set; }
     public SkeletonBattleState BattleState { get; private set; }
+    public SkeletonDeathState DeathState { get; private set; }
 
     private Coroutine knockbackCo;
     private bool isKnocked;
@@ -49,6 +50,7 @@ public class Skeleton : Entity<Skeleton>
         WalkState = new SkeletonWalkState(this, stateMachine, "IsWalk");
         AttackState = new SkeletonAttackState(this, stateMachine, "IsAttack");
         BattleState = new SkeletonBattleState(this, stateMachine, "IsBattle");
+        DeathState = new SkeletonDeathState(this, stateMachine, "IsDie");
     }
 
     private void Start()
@@ -153,4 +155,9 @@ public class Skeleton : Entity<Skeleton>
         base.SetVelocity(xVelocity, yVelocity);
     }
 
+    public override void EntityDeath()
+    {
+        base.EntityDeath();
+        stateMachine.ChangeState(DeathState);
+    }
 }

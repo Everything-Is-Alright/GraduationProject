@@ -68,4 +68,10 @@ public abstract class Entity<T> : MonoBehaviour, IEntity, IEntityState where T :
             Flip();
         }
     }
+
+    public virtual void EntityDeath()
+    {
+
+        
+    }
 }

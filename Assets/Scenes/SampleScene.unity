@@ -583,7 +583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dbea53b2e1053d40b4159033ac33844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 100
+  maxHp: 30
   isDead: 0
   onDamageKnockback: {x: 3, y: 0}
   knockbackDuration: 0.2
@@ -3113,7 +3113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aa5509ce360d894bbca4f8cd4ed383d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 1000
+  maxHp: 100
   isDead: 0
 --- !u!114 &853085504
 MonoBehaviour:

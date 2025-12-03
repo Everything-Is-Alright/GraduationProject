@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class PlayerDeathState : EntityState<Player>
+public class SkeletonDeathState : EntityState<Skeleton>
 {
-    public PlayerDeathState(Player player, StateMachine<Player> stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public SkeletonDeathState(Skeleton entity, StateMachine<Skeleton> stateMachine, string animBoolName) : base(entity, stateMachine, animBoolName)
     {
     }
 
