@@ -8,6 +8,7 @@ public interface IEntity
 }
 public abstract class Entity<T> : MonoBehaviour, IEntity, IEntityState where T : Entity<T>
 {
+    public static Entity<T> instance { get; private set; }
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
     public StateMachine<T> stateMachine { get; set; }
@@ -23,16 +24,16 @@ public abstract class Entity<T> : MonoBehaviour, IEntity, IEntityState where T :
 
     public int entityFacing = 1;
 
-
     protected virtual void Awake()
     {
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
         stateMachine = new StateMachine<T>();
+        instance = this;
+
     }
     void Start()
     {
-        
     }
 
     void Update()

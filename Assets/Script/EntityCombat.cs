@@ -17,7 +17,6 @@ public class EntityCombat : MonoBehaviour
             targetHealth?.TakeDamage(damage, transform);
         }
     }
-
     private Collider2D[] GetDetectedColliders()
     {
         return Physics2D.OverlapCircleAll(targetCheck.position, targetCheckRadius, whatIsTraget);

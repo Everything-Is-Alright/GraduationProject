@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using System.Collections;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using UnityEngine;
@@ -34,6 +35,9 @@ public class Skeleton : Entity<Skeleton>
     public SkeletonWalkState WalkState {  get; private set; }
     public SkeletonAttackState AttackState { get; private set; }
     public SkeletonBattleState BattleState { get; private set; }
+
+    private Coroutine knockbackCo;
+    private bool isKnocked;
 
     protected override void Awake()
     {
@@ -109,6 +113,16 @@ public class Skeleton : Entity<Skeleton>
         return hit;
     }
 
+    public void ReciveKnockback(Vector2 knockback, float duration)
+    {
+        if(knockbackCo != null)
+        {
+            StopCoroutine(knockbackCo);
+        }
+
+        knockbackCo = StartCoroutine(KnockbackCo(knockback, duration));
+    }
+
     public void TryEnterBattleState(Transform player)
     {
         if (stateMachine.currentState ==  BattleState || stateMachine.currentState == AttackState)
@@ -118,4 +132,25 @@ public class Skeleton : Entity<Skeleton>
         this.player = player;
         stateMachine.ChangeState(BattleState);
     }
+
+    private IEnumerator KnockbackCo(Vector2 knockback, float duration)
+    {
+        isKnocked = true;
+        rb.linearVelocity = knockback;
+
+        yield return new WaitForSeconds(duration);
+
+        rb.linearVelocity = Vector2.zero;
+        isKnocked = false;
+    }
+
+    public override void SetVelocity(float xVelocity, float yVelocity)
+    {
+        if(isKnocked)
+        {
+            return; 
+        }
+        base.SetVelocity(xVelocity, yVelocity);
+    }
+
 }

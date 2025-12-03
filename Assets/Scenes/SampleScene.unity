@@ -585,6 +585,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 100
   isDead: 0
+  onDamageKnockback: {x: 3, y: 0}
+  knockbackDuration: 0.2
 --- !u!114 &518604329
 MonoBehaviour:
   m_ObjectHideFlags: 0

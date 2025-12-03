@@ -41,8 +41,6 @@ public class Player : Entity<Player>
     public float comboResetTime = 1f;
     public Coroutine queuedAttackCo;
 
-    
-
     public Vector2 moveInput {  get; private set; }
 
     protected override void Awake()

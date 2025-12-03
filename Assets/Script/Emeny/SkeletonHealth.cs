@@ -3,10 +3,19 @@ using UnityEngine;
 public class SkeletonHealth : EntityHealth
 {
     private Skeleton skeleton;
+    [Header("Damage Knockback")]
+    [SerializeField] private Vector2 onDamageKnockback;
+    [SerializeField] private float knockbackDuration = 0.2f;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        skeleton = GetComponent<Skeleton>(); 
+    }
 
     private void Update()
     {
-        skeleton = GetComponent<Skeleton>();
+        onDamageKnockback = new Vector2(3f * Entity<Player>.instance.entityFacing, 0);
     }
 
     public override void TakeDamage(float damage, Transform damageDealer)
@@ -15,6 +24,8 @@ public class SkeletonHealth : EntityHealth
         {
             skeleton.TryEnterBattleState(damageDealer);
         }
+
+        skeleton.ReciveKnockback(onDamageKnockback, knockbackDuration);
         base.TakeDamage(damage, damageDealer);
     }
 }

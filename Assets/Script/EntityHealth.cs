@@ -3,7 +3,7 @@ using UnityEngine;
 public class EntityHealth : MonoBehaviour
 {
     [SerializeField] protected float maxHp = 100;
-    [SerializeField] protected bool isDead;
+    [SerializeField] public bool isDead;
 
     private EntityVFX entityvfx;
 
