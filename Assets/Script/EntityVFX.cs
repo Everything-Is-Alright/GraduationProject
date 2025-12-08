@@ -13,11 +13,17 @@ public class EntityVFX : MonoBehaviour
     [SerializeField] private float onDamageDuration = .2f;
     private Material originalMaterial;
     private Coroutine onDamageVfxCoroutine;
+    [SerializeField]private GameObject hitVfx;
 
     private void Awake()
     {
         sr = GetComponentInChildren<SpriteRenderer>();
         originalMaterial = sr.material;
+    }
+
+    public void CreateOnHitVFX(Transform target)
+    {
+        Instantiate(hitVfx, target.position, Quaternion.identity);
     }
 
     public void PlayerOnDamageVfx()
@@ -32,8 +38,10 @@ public class EntityVFX : MonoBehaviour
 
     private IEnumerator OnDamageVfxCo()
     {
+        Debug.Log("RedVFX");
         sr.material = onDamageMaterial;
         yield return new WaitForSeconds(onDamageDuration);
+        Debug.Log("NoneVFX");
         sr.material = originalMaterial;
     }
 }

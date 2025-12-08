@@ -547,7 +547,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &518604323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -711,6 +711,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onDamageMaterial: {fileID: 2100000, guid: e7c072897ebac104eb21e9ccae767eff, type: 2}
   onDamageDuration: 0.2
+  hitVfx: {fileID: 4797484062119828516, guid: 5960f9512a97f5c4b9ddf7b6362caf9e, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -3194,6 +3195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onDamageMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   onDamageDuration: 0.2
+  hitVfx: {fileID: 4797484062119828516, guid: 5960f9512a97f5c4b9ddf7b6362caf9e, type: 3}
 --- !u!1 &853085497
 GameObject:
   m_ObjectHideFlags: 0
@@ -3360,6 +3362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onDamageMaterial: {fileID: 2100000, guid: e7c072897ebac104eb21e9ccae767eff, type: 2}
   onDamageDuration: 0.2
+  hitVfx: {fileID: 4797484062119828516, guid: 5960f9512a97f5c4b9ddf7b6362caf9e, type: 3}
 --- !u!114 &853085505
 MonoBehaviour:
   m_ObjectHideFlags: 0

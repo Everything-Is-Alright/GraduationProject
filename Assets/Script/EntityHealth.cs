@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EntityHealth : MonoBehaviour
+public class EntityHealth : MonoBehaviour, IDamgable
 {
     [SerializeField] protected float maxHp = 100;
     [SerializeField] public bool isDead;
@@ -16,6 +16,7 @@ public class EntityHealth : MonoBehaviour
         if (isDead)
             return;
 
+        Debug.Log("entityvfxÊÇ·ñÎª¿Õ£º" + (entityvfx == null));
         entityvfx.PlayerOnDamageVfx();
         ReduceHp(damage);
     }

@@ -36,6 +36,7 @@ public class Skeleton : Entity<Skeleton>
     public SkeletonAttackState AttackState { get; private set; }
     public SkeletonBattleState BattleState { get; private set; }
     public SkeletonDeathState DeathState { get; private set; }
+    public SkeletonStunState StunState { get; private set; }
 
     private Coroutine knockbackCo;
     private bool isKnocked;
@@ -51,6 +52,7 @@ public class Skeleton : Entity<Skeleton>
         AttackState = new SkeletonAttackState(this, stateMachine, "IsAttack");
         BattleState = new SkeletonBattleState(this, stateMachine, "IsBattle");
         DeathState = new SkeletonDeathState(this, stateMachine, "IsDie");
+        StunState = new SkeletonStunState(this, stateMachine, "IsStun");
     }
 
     private void Start()

@@ -8,14 +8,23 @@ public class EntityCombat : MonoBehaviour
     [SerializeField] private float targetCheckRadius;
     [SerializeField] private LayerMask whatIsTraget;
 
+
+    private EntityVFX vfx;
     public float damage = 30;
+
+    public void Awake()
+    {
+        vfx = GetComponent<EntityVFX>();
+    }
     public void PerformAttack()
     {
         foreach(var target in GetDetectedColliders())
         {
             IDamgable damgable = target.GetComponent<IDamgable>();
+            
+            
             damgable?.TakeDamage(damage, transform);
-
+            vfx.CreateOnHitVFX(target.transform);
             //EntityHealth targetHealth = target.GetComponent<EntityHealth>();
             //targetHealth?.TakeDamage(damage, transform);
         }
