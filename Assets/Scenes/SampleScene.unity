@@ -267,7 +267,7 @@ Transform:
   m_GameObject: {fileID: 246412170}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.6239641, y: -5.192209, z: 0.048467785}
+  m_LocalPosition: {x: 0, y: 0, z: 0.02302321}
   m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -711,6 +711,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onDamageMaterial: {fileID: 2100000, guid: e7c072897ebac104eb21e9ccae767eff, type: 2}
   onDamageDuration: 0.2
+  hitVfxColor: {r: 1, g: 1, b: 1, a: 1}
   hitVfx: {fileID: 4797484062119828516, guid: 5960f9512a97f5c4b9ddf7b6362caf9e, type: 3}
 --- !u!1 &519420028
 GameObject:
@@ -3141,7 +3142,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 1.4818517, y: -5.8039436}
+  m_Offset: {x: -0.14216328, y: -0.6243199}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3151,7 +3152,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2.1275332, y: 1.2456207}
+  m_Size: {x: 2.1767464, y: 1.2702272}
   m_EdgeRadius: 0
 --- !u!4 &781020089
 Transform:
@@ -3162,7 +3163,7 @@ Transform:
   m_GameObject: {fileID: 781020086}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.21, y: 1.922, z: -0.048467785}
+  m_LocalPosition: {x: -6.17, y: -3.24, z: -0.02302}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -3195,6 +3196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onDamageMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   onDamageDuration: 0.2
+  hitVfxColor: {r: 1, g: 1, b: 1, a: 1}
   hitVfx: {fileID: 4797484062119828516, guid: 5960f9512a97f5c4b9ddf7b6362caf9e, type: 3}
 --- !u!1 &853085497
 GameObject:
@@ -3362,6 +3364,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onDamageMaterial: {fileID: 2100000, guid: e7c072897ebac104eb21e9ccae767eff, type: 2}
   onDamageDuration: 0.2
+  hitVfxColor: {r: 1, g: 1, b: 1, a: 1}
   hitVfx: {fileID: 4797484062119828516, guid: 5960f9512a97f5c4b9ddf7b6362caf9e, type: 3}
 --- !u!114 &853085505
 MonoBehaviour:

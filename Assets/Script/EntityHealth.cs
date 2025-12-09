@@ -16,7 +16,6 @@ public class EntityHealth : MonoBehaviour, IDamgable
         if (isDead)
             return;
 
-        Debug.Log("entityvfxÊÇ·ñÎª¿Õ£º" + (entityvfx == null));
         entityvfx.PlayerOnDamageVfx();
         ReduceHp(damage);
     }
