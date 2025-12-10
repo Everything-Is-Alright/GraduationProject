@@ -6,13 +6,13 @@ public class EntityHealth : MonoBehaviour, IDamgable
     private Slider healthBar;
     private EntityVFX entityvfx;
     private float maxHp = 100;
-    protected float currentHp = 100;
+    protected float currentHp;
     [SerializeField] public bool isDead;
 
     protected virtual void Awake()
     {
         entityvfx = GetComponent<EntityVFX>();
-        healthBar = GetComponent<Slider>();
+        healthBar = GetComponentInChildren<Slider>();
         currentHp = maxHp;
         UpdateHealthBar();
     }
@@ -44,7 +44,7 @@ public class EntityHealth : MonoBehaviour, IDamgable
         {
             return;
         }
-
+        Debug.Log(currentHp);
         healthBar.value = currentHp / maxHp;
     }
     protected virtual void Die()
