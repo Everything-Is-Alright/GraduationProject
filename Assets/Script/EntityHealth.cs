@@ -3,17 +3,18 @@ using UnityEngine.UI;
 
 public class EntityHealth : MonoBehaviour, IDamgable
 {
-    private Slider healthBar;
     private EntityVFX entityvfx;
-    private float maxHp = 100;
-    protected float currentHp;
+    private HealthBar healthBar;
+    public float currentHp;
+    private EntityStats entityStats;
     [SerializeField] public bool isDead;
 
     protected virtual void Awake()
     {
         entityvfx = GetComponent<EntityVFX>();
-        healthBar = GetComponentInChildren<Slider>();
-        currentHp = maxHp;
+        healthBar = GetComponentInChildren<HealthBar>();
+        entityStats = GetComponent<EntityStats>();
+        currentHp = entityStats.GetMaxHealth();
         UpdateHealthBar();
     }
 
@@ -44,9 +45,9 @@ public class EntityHealth : MonoBehaviour, IDamgable
         {
             return;
         }
-        Debug.Log(currentHp);
-        healthBar.value = currentHp / maxHp;
+        healthBar.UpdateHealthBar();
     }
+
     protected virtual void Die()
     {
         isDead = true;

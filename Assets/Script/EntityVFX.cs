@@ -40,10 +40,8 @@ public class EntityVFX : MonoBehaviour
 
     private IEnumerator OnDamageVfxCo()
     {
-        Debug.Log("RedVFX");
         sr.material = onDamageMaterial;
         yield return new WaitForSeconds(onDamageDuration);
-        Debug.Log("NoneVFX");
         sr.material = originalMaterial;
     }
 }

@@ -18,6 +18,7 @@ public class ParallaxLayer
 
     public void Move(float distanceToMove)
     {
+
         background.position += Vector3.right * (distanceToMove * parallaxMultiplier);
     }
 
