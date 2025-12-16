@@ -4043,7 +4043,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   redHp: {fileID: 1666099205}
   whiteHp: {fileID: 736315311}
-  entityStats: {fileID: 0}
+  entityStats: {fileID: 518604330}
   entityHp: {fileID: 518604328}
 --- !u!1 &1311931681
 GameObject:

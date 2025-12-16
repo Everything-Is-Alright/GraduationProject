@@ -21,8 +21,8 @@ public class HealthBar : MonoBehaviour
 
     public void UpdateHealthBar()
     {
+        //if (entityStats == null) { Debug.LogError("entityStatsÎª¿Õ", this); return; }
         redHp.fillAmount = entityHp.currentHp / entityStats.GetMaxHealth();
-        Debug.Log(redHp.fillAmount);
 
         if(updateCoroutine != null)
         {
