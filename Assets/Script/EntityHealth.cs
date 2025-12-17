@@ -16,6 +16,7 @@ public class EntityHealth : MonoBehaviour, IDamgable
         entityStats = GetComponent<EntityStats>();
         currentHp = entityStats.GetMaxHealth();
         UpdateHealthBar();
+        //Debug.Log("EntityHealth Awake÷¥––£¨currentHp≥ı ºªØ£∫" + currentHp);
     }
 
     public virtual void TakeDamage(float damage, Transform damageDealer)
@@ -25,7 +26,7 @@ public class EntityHealth : MonoBehaviour, IDamgable
 
         entityvfx.PlayerOnDamageVfx();
         ReduceHp(damage);
-        Debug.Log(currentHp);
+        //Debug.Log(currentHp);
     }
 
     protected void ReduceHp(float damage)

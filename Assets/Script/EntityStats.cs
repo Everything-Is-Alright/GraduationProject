@@ -13,7 +13,7 @@ public class EntityStats : MonoBehaviour
             Debug.Log("baseHpÎª¿Õ£¡");
         }
         float bonusHp = vitality.GetValue() * 5;
-        Debug.Log(baseHp + " " + bonusHp);
+        //Debug.Log(baseHp + " " + bonusHp);
         return baseHp + bonusHp;
     }
 }
