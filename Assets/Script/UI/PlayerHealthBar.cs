@@ -7,6 +7,7 @@ public class PlayerHealthBar : MonoBehaviour
 {
     public Image redHealth;
     public Image whiteHealth;
+
     public EntityStats entityStats;
     public EntityHealth entityHealth;
     private float delayTime = 0.5f;
@@ -20,7 +21,7 @@ public class PlayerHealthBar : MonoBehaviour
         UpdateHealthBar();
     }
 
-    private void UpdateHealthBar()
+    public void UpdateHealthBar()
     {
         redHealth.fillAmount = entityHealth.currentHp / entityStats.GetMaxHealth();
         Debug.Log(entityHealth.currentHp);

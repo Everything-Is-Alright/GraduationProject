@@ -4,7 +4,8 @@ using UnityEngine.UI;
 public class EntityHealth : MonoBehaviour, IDamgable
 {
     private EntityVFX entityvfx;
-    private EnemyHealthBar healthBar;
+    private EnemyHealthBar enemyBar;
+    private PlayerHealthBar playerBar;
     public float currentHp;
     private EntityStats entityStats;
     [SerializeField] public bool isDead;
@@ -12,7 +13,8 @@ public class EntityHealth : MonoBehaviour, IDamgable
     protected virtual void Awake()
     {
         entityvfx = GetComponent<EntityVFX>();
-        healthBar = GetComponentInChildren<EnemyHealthBar>();
+        enemyBar = GetComponentInChildren<EnemyHealthBar>();
+        playerBar = GetComponentInChildren<PlayerHealthBar>();
         entityStats = GetComponent<EntityStats>();
         currentHp = entityStats.GetMaxHealth();
         UpdateHealthBar();
@@ -42,11 +44,23 @@ public class EntityHealth : MonoBehaviour, IDamgable
 
     private void UpdateHealthBar()
     {
-        if (healthBar == null)
+        if(enemyBar != null || playerBar != null)
+        {
+            if(enemyBar != null)
+            {
+                enemyBar.UpdateHealthBar();
+            }
+
+            if(playerBar != null)
+            {
+                playerBar.UpdateHealthBar();
+            }
+        }
+        else
         {
             return;
         }
-        healthBar.UpdateHealthBar();
+        
     }
 
     protected virtual void Die()
