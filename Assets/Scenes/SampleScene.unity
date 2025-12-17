@@ -735,7 +735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
+  m_IgnoreReversedGraphics: 0
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
@@ -996,7 +996,7 @@ GameObject:
   - component: {fileID: 512054983}
   - component: {fileID: 512054982}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1018,7 +1018,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -276.94833, y: 138.7}
+  m_AnchoredPosition: {x: -322.6, y: 174.4}
   m_SizeDelta: {x: 62.4861, y: 62.4864}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &512054982
@@ -1524,7 +1524,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.875597, y: 2.0389264, z: -7.9483953}
+  m_LocalPosition: {x: -4.8756876, y: 2.0389264, z: -7.9483953}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4397,7 +4397,7 @@ Transform:
   m_GameObject: {fileID: 965861123}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.875597, y: 2.0389264, z: -7.9483953}
+  m_LocalPosition: {x: -4.8756876, y: 2.0389264, z: -7.9483953}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5370,7 +5370,7 @@ GameObject:
   - component: {fileID: 1969668726}
   - component: {fileID: 1969668725}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5392,7 +5392,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -276.9, y: 139}
+  m_AnchoredPosition: {x: -322.55167, y: 174.69998}
   m_SizeDelta: {x: 54.1895, y: 54.1897}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1969668725

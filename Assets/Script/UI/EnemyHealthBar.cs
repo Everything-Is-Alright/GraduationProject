@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-public class HealthBar : MonoBehaviour
+public class EnemyHealthBar : MonoBehaviour
 {
     public Image redHp;
     public Image whiteHp;
