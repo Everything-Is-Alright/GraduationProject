@@ -1390,8 +1390,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp:
     baseValue: 100
-  vitality:
-    baseValue: 2
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -4253,8 +4251,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp:
     baseValue: 100
-  vitality:
-    baseValue: 2
 --- !u!1 &891879165
 GameObject:
   m_ObjectHideFlags: 0
