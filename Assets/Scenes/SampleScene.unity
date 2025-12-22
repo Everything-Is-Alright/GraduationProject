@@ -3429,7 +3429,6 @@ MonoBehaviour:
   whatIsTraget:
     serializedVersion: 2
     m_Bits: 128
-  damage: 10
 --- !u!114 &853085504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3483,6 +3482,30 @@ MonoBehaviour:
       baseValue: 0
     vitality:
       baseValue: 2
+  offense:
+    damage:
+      baseValue: 10
+    critPower:
+      baseValue: 0
+    critChance:
+      baseValue: 0
+    fireDamage:
+      baseValue: 0
+    iceDamage:
+      baseValue: 0
+    lightningDamage:
+      baseValue: 0
+  defense:
+    armor:
+      baseValue: 0
+    evasion:
+      baseValue: 0
+    fireRes:
+      baseValue: 0
+    iceRes:
+      baseValue: 0
+    lightningRes:
+      baseValue: 0
 --- !u!1 &891879165
 GameObject:
   m_ObjectHideFlags: 0
@@ -4796,6 +4819,10 @@ PrefabInstance:
     - target: {fileID: 6501228112268925327, guid: 1f64e50cfa797c14e9f0d7bcb43735ed, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593217964763236896, guid: 1f64e50cfa797c14e9f0d7bcb43735ed, type: 3}
+      propertyPath: offense.damage.baseValue
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
