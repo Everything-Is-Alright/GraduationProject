@@ -85,7 +85,7 @@ public class SkeletonBattleState : EntityState<Skeleton>
     {
         if(player == null)
         {
-            return 0;
+            return entity.entityFacing;
         }
 
         return player.position.x > entity.transform.position.x ? 1 : -1;
