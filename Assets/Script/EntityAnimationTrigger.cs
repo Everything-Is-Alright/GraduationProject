@@ -21,4 +21,9 @@ public class EntityAnimationTrigger : MonoBehaviour
     {
         entityCombat.PerformAttack();
     }
+
+    public void EntityDestroyTrigger()
+    {
+        entity.EntityDestroy();
+    }
 }

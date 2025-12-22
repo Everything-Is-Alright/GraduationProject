@@ -162,4 +162,5 @@ public class Skeleton : Entity<Skeleton>
         base.EntityDeath();
         stateMachine.ChangeState(DeathState);
     }
+
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public interface IEntity
 {
     void CallAnimationTrigger();
+    void EntityDestroy();
 }
 public abstract class Entity<T> : MonoBehaviour, IEntity, IEntityState where T : Entity<T>
 {
@@ -22,6 +23,8 @@ public abstract class Entity<T> : MonoBehaviour, IEntity, IEntityState where T :
     [SerializeField] public bool groundDetected;
     [SerializeField] public bool wallDetected;
 
+
+    private bool isDestroying = false;
     public int entityFacing = 1;
 
     protected virtual void Awake()
@@ -69,9 +72,14 @@ public abstract class Entity<T> : MonoBehaviour, IEntity, IEntityState where T :
         }
     }
 
-    public virtual void EntityDeath()
-    {
+    public virtual void EntityDeath() { }
 
-        
+    public void EntityDestroy()
+    {
+        if (isDestroying)
+        {
+            return;
+        }
+        Destroy(gameObject);
     }
 }
