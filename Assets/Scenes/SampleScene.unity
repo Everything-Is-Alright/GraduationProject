@@ -1343,7 +1343,6 @@ MonoBehaviour:
   whatIsTraget:
     serializedVersion: 2
     m_Bits: 8
-  damage: 10
 --- !u!114 &518604328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1389,7 +1388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp:
-    baseValue: 100
+    baseValue: 1000
   major:
     strength:
       baseValue: 0
@@ -1398,6 +1397,30 @@ MonoBehaviour:
     intelligence:
       baseValue: 0
     vitality:
+      baseValue: 0
+  offense:
+    damage:
+      baseValue: 10
+    critPower:
+      baseValue: 0
+    critChance:
+      baseValue: 0
+    fireDamage:
+      baseValue: 0
+    iceDamage:
+      baseValue: 0
+    lightningDamage:
+      baseValue: 0
+  defense:
+    armor:
+      baseValue: 0
+    evasion:
+      baseValue: 0
+    fireRes:
+      baseValue: 0
+    iceRes:
+      baseValue: 0
+    lightningRes:
       baseValue: 0
 --- !u!1 &519420028
 GameObject:
@@ -4215,7 +4238,6 @@ MonoBehaviour:
   whatIsTraget:
     serializedVersion: 2
     m_Bits: 128
-  damage: 10
 --- !u!114 &853085504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4259,16 +4281,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp:
-    baseValue: 100
+    baseValue: 1000
   major:
     strength:
-      baseValue: 0
+      baseValue: 5
     agility:
-      baseValue: 0
+      baseValue: 20
     intelligence:
       baseValue: 0
     vitality:
       baseValue: 2
+  offense:
+    damage:
+      baseValue: 20
+    critPower:
+      baseValue: 0
+    critChance:
+      baseValue: 0
+    fireDamage:
+      baseValue: 0
+    iceDamage:
+      baseValue: 0
+    lightningDamage:
+      baseValue: 0
+  defense:
+    armor:
+      baseValue: 0
+    evasion:
+      baseValue: 0
+    fireRes:
+      baseValue: 0
+    iceRes:
+      baseValue: 0
+    lightningRes:
+      baseValue: 0
 --- !u!1 &891879165
 GameObject:
   m_ObjectHideFlags: 0
@@ -4583,7 +4629,7 @@ MonoBehaviour:
   redHp: {fileID: 1666099205}
   whiteHp: {fileID: 736315311}
   entityStats: {fileID: 518604330}
-  entityHp: {fileID: 518604328}
+  entityHealth: {fileID: 518604328}
 --- !u!1 &1234705402
 GameObject:
   m_ObjectHideFlags: 0

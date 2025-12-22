@@ -7,7 +7,7 @@ public class EnemyHealthBar : MonoBehaviour
     public Image whiteHp;
 
     public EntityStats entityStats;
-    public EntityHealth entityHp;
+    public EntityHealth entityHealth;
     private float delayTime = 0.5f;
 
     private Coroutine updateCoroutine;
@@ -15,14 +15,14 @@ public class EnemyHealthBar : MonoBehaviour
     private void Awake()
     {
         entityStats = GetComponentInParent<EntityStats>();
-        entityHp = GetComponentInParent<EntityHealth>();
+        entityHealth = GetComponentInParent<EntityHealth>();
         UpdateHealthBar();
     }
 
     public void UpdateHealthBar()
     {
         //if (entityStats == null) { Debug.LogError("entityStatsÎª¿Õ", this); return; }
-        redHp.fillAmount = entityHp.currentHp / entityStats.GetMaxHealth();
+        redHp.fillAmount = entityHealth.currentHp / entityStats.GetMaxHealth();
 
         if(updateCoroutine != null)
         {
@@ -30,6 +30,7 @@ public class EnemyHealthBar : MonoBehaviour
         }
 
         updateCoroutine = StartCoroutine(UpdateHpDelay());
+        Debug.Log(entityHealth.currentHp);
     }
 
     private IEnumerator UpdateHpDelay()

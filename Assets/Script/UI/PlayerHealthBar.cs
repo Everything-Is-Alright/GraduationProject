@@ -24,7 +24,7 @@ public class PlayerHealthBar : MonoBehaviour
     public void UpdateHealthBar()
     {
         redHealth.fillAmount = entityHealth.currentHp / entityStats.GetMaxHealth();
-        Debug.Log(entityHealth.currentHp);
+        //Debug.Log(entityHealth.currentHp);
         if(updateCoroutine != null)
         {
             StopCoroutine(updateCoroutine);

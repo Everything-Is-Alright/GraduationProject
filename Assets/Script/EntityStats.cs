@@ -1,36 +1,39 @@
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class EntityStats : MonoBehaviour
 {
     public Stat maxHp;
     public StatMajor major;
-
+    public StatOffense offense;
+    public StatDefense defense;
     
+    //获取最大生命值
     public float GetMaxHealth()
     {
-        if (maxHp == null)
-        {
-            Debug.LogError($"【EntityStats】maxHp 未赋值！挂载对象：{gameObject.name}", this);
-            return 0; // 返回默认值避免崩溃
-        }
-
-        // 2. 校验 major 是否为空
-        if (major == null)
-        {
-            Debug.LogError($"【EntityStats】major 未赋值！挂载对象：{gameObject.name}", this);
-            return maxHp.GetValue(); // 仅返回基础血量，避免崩溃
-        }
-
-        // 3. 校验 major.vitality 是否为空
-        if (major.vitality == null)
-        {
-            Debug.LogError($"【EntityStats】major.vitality 未赋值！挂载对象：{gameObject.name}", this);
-            return maxHp.GetValue(); // 仅返回基础血量
-        }
-
         float baseHp = maxHp.GetValue();
         float bonusHp = major.vitality.GetValue() * 5;
-        //Debug.Log(baseHp + " " + bonusHp);
         return baseHp + bonusHp;
+    }
+
+    //获取物理攻击力
+    public float GetPhysicalDamage()
+    {
+        float baseDamage = offense.damage.GetValue();
+        float bonusDamage = major.strength.GetValue();
+        float totalBaseDamage = baseDamage + bonusDamage;
+
+        float baseCritChance = offense.critChance.GetValue();
+        float bonusCritChance = major.agility.GetValue() * .3f;
+        float critChance = baseCritChance + bonusCritChance;
+
+        float baseCritPower = offense.critPower.GetValue();
+        float bonusCritPower = major.strength.GetValue() * .5f;
+        float critPower = (baseCritPower + bonusCritPower) / 100;
+        
+        bool isCrit = Random.Range(0, 100) < critChance;
+        float finalDamage = isCrit ? totalBaseDamage * critPower : totalBaseDamage;
+
+        return finalDamage;
     }
 }
