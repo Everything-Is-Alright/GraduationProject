@@ -12,7 +12,5 @@ public class StatOffense
     public Stat critChance;
 
     //ÔªËØÉËº¦
-    public Stat fireDamage;
-    public Stat iceDamage;
-    public Stat lightningDamage;
+    public Stat magicDamage;
 }

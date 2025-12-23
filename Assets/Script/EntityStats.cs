@@ -8,7 +8,7 @@ public class EntityStats : MonoBehaviour
     public StatOffense offense;
     public StatDefense defense;
     
-    //获取最大生命值
+    //生命值
     public float GetMaxHealth()
     {
         float baseHp = maxHp.GetValue();
@@ -49,5 +49,22 @@ public class EntityStats : MonoBehaviour
 
         float finalMitigation = Mathf.Clamp(mitigation, 0, mitigationCap);
         return finalMitigation;
+    }
+
+    //魔法攻击
+    public float GetMagicDamage()
+    {
+        float magicDamage = offense.magicDamage.GetValue();
+
+        float bonusMagicDamage = major.intelligence.GetValue();
+
+        float finalDamage = magicDamage + bonusMagicDamage;
+        
+        if(finalDamage <=0)
+        {
+            return 0;
+        }
+
+        return finalDamage;
     }
 }

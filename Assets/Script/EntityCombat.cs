@@ -16,7 +16,6 @@ public class EntityCombat : MonoBehaviour
     {
         vfx = GetComponent<EntityVFX>();
         stats = GetComponent<EntityStats>();
-        
     }
     public void PerformAttack()
     {
@@ -25,7 +24,7 @@ public class EntityCombat : MonoBehaviour
             IDamgable damgable = target.GetComponent<IDamgable>();
             
             
-            damgable?.TakeDamage(stats.GetPhysicalDamage(), transform);
+            damgable?.TakeDamage(stats.GetPhysicalDamage(), stats.GetMagicDamage(), transform);
             vfx.CreateOnHitVFX(target.transform);
             //EntityHealth targetHealth = target.GetComponent<EntityHealth>();
             //targetHealth?.TakeDamage(damage, transform);

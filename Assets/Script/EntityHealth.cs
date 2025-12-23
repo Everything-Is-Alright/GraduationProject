@@ -22,7 +22,7 @@ public class EntityHealth : MonoBehaviour, IDamgable
         //Debug.Log("EntityHealth Awake÷¥––£¨currentHp≥ı ºªØ£∫" + currentHp);
     }
 
-    public virtual void TakeDamage(float damage, Transform damageDealer)
+    public virtual void TakeDamage(float damage, float magicDamage, Transform damageDealer)
     {
         if (isDead)
             return;

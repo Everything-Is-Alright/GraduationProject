@@ -19,7 +19,7 @@ public class SkeletonHealth : EntityHealth
         onDamageKnockback = new Vector2(3f * Entity<Player>.instance.entityFacing, 0);
     }
 
-    public override void TakeDamage(float damage, Transform damageDealer)
+    public override void TakeDamage(float damage, float magicDamage, Transform damageDealer)
     {
         if(damageDealer.CompareTag("Player"))
         {
@@ -27,7 +27,7 @@ public class SkeletonHealth : EntityHealth
         }
 
         skeleton.ReciveKnockback(onDamageKnockback, knockbackDuration);
-        base.TakeDamage(damage, damageDealer);
+        base.TakeDamage(damage, magicDamage, damageDealer);
     }
 
     protected override void Die()

@@ -10,7 +10,5 @@ public class StatDefense
     public Stat evasion;
 
     //ÔªËØ¿¹ÐÔ
-    public Stat fireRes;
-    public Stat iceRes;
-    public Stat lightningRes;
+    public Stat magicRes;
 }
