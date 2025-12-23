@@ -16,7 +16,7 @@ public class EntityStats : MonoBehaviour
         return baseHp + bonusHp;
     }
 
-    //获取物理攻击力
+    //物理攻击力
     public float GetPhysicalDamage()
     {
         float baseDamage = offense.damage.GetValue();
@@ -35,5 +35,19 @@ public class EntityStats : MonoBehaviour
         float finalDamage = isCrit ? totalBaseDamage * critPower : totalBaseDamage;
 
         return finalDamage;
+    }
+
+    //防御力
+    public float GetArmorMitigation()
+    {
+        float baseArmor = defense.armor.GetValue();
+        float bonusArmor = major.vitality.GetValue();
+        float totalArmor = baseArmor + bonusArmor;
+
+        float mitigation = totalArmor / (totalArmor + 100);
+        float mitigationCap = .85f;
+
+        float finalMitigation = Mathf.Clamp(mitigation, 0, mitigationCap);
+        return finalMitigation;
     }
 }

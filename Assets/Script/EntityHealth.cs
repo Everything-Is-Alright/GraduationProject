@@ -1,13 +1,14 @@
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class EntityHealth : MonoBehaviour, IDamgable
 {
     private EntityVFX entityvfx;
+    private EntityStats entityStats;
     private EnemyHealthBar enemyBar;
     private PlayerHealthBar playerBar;
     public float currentHp;
-    private EntityStats entityStats;
     [SerializeField] public bool isDead;
 
     protected virtual void Awake()
@@ -26,9 +27,11 @@ public class EntityHealth : MonoBehaviour, IDamgable
         if (isDead)
             return;
 
+        float mitigation = entityStats.GetArmorMitigation();
+        float finalDamage = damage * (1 -  mitigation);
         entityvfx.PlayerOnDamageVfx();
-        ReduceHp(damage);
-        //Debug.Log(currentHp);
+        ReduceHp(finalDamage);
+
     }
 
     protected void ReduceHp(float damage)
