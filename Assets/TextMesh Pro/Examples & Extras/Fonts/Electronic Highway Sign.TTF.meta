@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f5c52c72b0d753444b16f4ab152262ae
+guid: 8a2b9e2a607dd2143b58c44bc32410b4
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -8,8 +8,9 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
+  fontName: Electronic Highway Sign
   fontNames:
-  - m6x11plus
+  - Electronic Highway Sign
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
