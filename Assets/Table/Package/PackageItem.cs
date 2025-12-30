@@ -6,6 +6,7 @@ public class PackageItem
     //编号
     public int id;
     //分类
+    //1-武器，2-护甲，3-饰品，4-药物，5-任务物品
     public int type;
     //星级
     public int star;
