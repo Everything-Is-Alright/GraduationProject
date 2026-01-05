@@ -10,6 +10,11 @@ public class BasePanel : MonoBehaviour
 
     protected new string name;
 
+    public virtual void Awake()
+    {
+
+    }
+
     public virtual void OpenPanel(string name)
     {
         this.name = name;

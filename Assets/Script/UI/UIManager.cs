@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIManager : MonoBehaviour
+public class UIManager
 {
     private static UIManager instance;
 
-    //
+    //路径缓存字典
     private Dictionary<string, string> pathDict;
     //预制件缓存字典
     private Dictionary<string, GameObject> prefabDict;
@@ -20,7 +20,14 @@ public class UIManager : MonoBehaviour
         {
             if(uiRoot == null)
             {
-                uiRoot = GameObject.Find("UISystem").transform;
+                if(GameObject.Find("Canvas"))
+                {
+                    uiRoot = GameObject.Find("Canvas").transform;
+                }
+                else
+                {
+                    uiRoot = GameObject.Find("UISystem").transform;
+                }
             }
             return uiRoot; 
         }
@@ -47,7 +54,7 @@ public class UIManager : MonoBehaviour
     {
         pathDict = new Dictionary<string, string>()
         {
-            {UIConst.PackagePanel, "Assets/Prefab/PackagePanel.prefab" }
+            {UIConst.PackagePanel, "Prefab/PackagePanel" }
         };
         prefabDict = new Dictionary<string, GameObject>();
         panelDict = new Dictionary<string, BasePanel>();
@@ -68,13 +75,14 @@ public class UIManager : MonoBehaviour
         if(!pathDict.TryGetValue(name, out path))
         {
             Debug.LogError("界面名称错误或未配置路径");
+            return null;
         }
 
         //使用缓存的预制件
         GameObject panelPrefab = null;
         if(!prefabDict.TryGetValue(name, out panelPrefab))
         {
-            string realPath = "Prefab/" + path;
+            string realPath = path;
             panelPrefab = Resources.Load<GameObject>(realPath) as GameObject;
             prefabDict.Add(name, panelPrefab);
         }
