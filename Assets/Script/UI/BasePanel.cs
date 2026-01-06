@@ -10,7 +10,7 @@ public class BasePanel : MonoBehaviour
 
     protected new string name;
 
-    public virtual void Awake()
+    protected virtual void Awake()
     {
 
     }
