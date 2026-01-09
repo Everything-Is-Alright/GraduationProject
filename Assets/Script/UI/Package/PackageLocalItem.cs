@@ -5,7 +5,7 @@ public class PackageLocalItem
 {
     public string uid;
 
-    public string id;
+    public int id;
 
     public int num;
 

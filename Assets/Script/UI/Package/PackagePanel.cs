@@ -20,11 +20,38 @@ public class PackagePanel : BasePanel
 
     private Transform UIBottomClose;
 
+    public GameObject PackageUIItemPrefab;
 
     protected override void Awake()
     {
         base.Awake();
         InitUI();
+    }
+
+    private void Star()
+    {
+        RefreshUI();
+    }
+
+    private void RefreshUI()
+    {
+        RefreshScoll();
+    }
+
+    private void RefreshScoll()
+    {
+        //清除滚动容器中的物品
+        RectTransform scrollContent = UICenterScrollView.GetComponent<ScrollRect>().content;
+        for (int i = 0; i < scrollContent.childCount; i++)
+        {
+            Destroy(scrollContent.GetChild(i).gameObject);
+        }
+
+        foreach(PackageLocalItem localData in GameManager.Instance.GetSortPackageLocalData())
+        {
+            Transform PackageUIItem = Instantiate(PackageUIItemPrefab.transform, scrollContent) as Transform;
+            PackageCell packageCell = PackageUIItem.GetComponent<PackageCell>();
+        }
     }
 
     private void InitUI()
