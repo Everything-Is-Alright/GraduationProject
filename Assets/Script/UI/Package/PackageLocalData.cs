@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEditor.Search;
 
-public class PackageLocalData : MonoBehaviour
+public class PackageLocalData
 {
     private static PackageLocalData instance;
 
@@ -13,6 +13,7 @@ public class PackageLocalData : MonoBehaviour
             if(instance == null)
             {
                 instance = new PackageLocalData();
+                instance.LoadPackage();
             }
             return instance;
         }

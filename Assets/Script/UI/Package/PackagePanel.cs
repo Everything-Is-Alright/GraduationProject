@@ -51,6 +51,7 @@ public class PackagePanel : BasePanel
         {
             Transform PackageUIItem = Instantiate(PackageUIItemPrefab.transform, scrollContent) as Transform;
             PackageCell packageCell = PackageUIItem.GetComponent<PackageCell>();
+            packageCell.Refresh(localData, this);
         }
     }
 
@@ -114,6 +115,7 @@ public class PackagePanel : BasePanel
     private void OnClickBottomClose()
     {
         Debug.Log("µã»÷ÍË³ö£¡");
+        ClosePanel();
     }
     private void OnClickLeftBag()
     {

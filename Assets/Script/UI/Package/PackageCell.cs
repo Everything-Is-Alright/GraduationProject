@@ -30,5 +30,27 @@ public class PackageCell : MonoBehaviour
         this.packageLocalData = packageLocalData;
         this.packageItem = GameManager.Instance.GetPackageItemById(packageLocalData.id);
         this.uiParent = uiParent;
+
+        //ŒÔ∆∑Õº∆¨
+        Texture2D t = (Texture2D)Resources.Load(this.packageItem.imagePath);
+        Sprite temp = Sprite.Create(t, new Rect(0, 0, t.width, t.height), new Vector2(0,0));
+
+        RefreshStars();
+    }
+
+    public void RefreshStars()
+    {
+        for (int i = 0; i < UIStars.childCount; i++)
+        {
+            Transform star = UIStars.GetChild(i);
+            if(this.packageItem.star > 1)
+            {
+                star.gameObject.SetActive(true);
+            }
+            else
+            {
+                star.gameObject.SetActive(false);
+            }
+        }
     }
 }
