@@ -26,7 +26,8 @@ public class Player : Entity<Player>
 
     public Vector2 playerDir;
 
-
+    public GameObject Menu;
+    public bool isOpen = false;
     [Header("Roll detail")]
     public float RollMoveMultiplier = 1.5f;
 
@@ -77,6 +78,7 @@ public class Player : Entity<Player>
     {
         HandleCollisionDetection();
         stateMachine.UpdateActiveState();
+        OpenBag();
     }
 
     public override void SetVelocity(float xVelocity, float yVelocity)
@@ -116,5 +118,14 @@ public class Player : Entity<Player>
     {
         base.EntityDeath();
         stateMachine.ChangeState(playerDeathState);
+    }
+
+    public void OpenBag()
+    {
+        if(Input.GetKeyDown(KeyCode.I))
+        {
+            isOpen = !isOpen;
+            Menu.SetActive(isOpen);
+        }
     }
 }
