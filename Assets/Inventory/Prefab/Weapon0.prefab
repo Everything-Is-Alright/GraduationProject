@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotItem: {fileID: 0}
-  slotImage: {fileID: 8469272680858244773}
+  slotImage: {fileID: 4883884091289505476}
   slotNum: {fileID: 4622399462082402305}
 --- !u!1 &2128151016827179872
 GameObject:

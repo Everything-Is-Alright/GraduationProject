@@ -3,11 +3,10 @@ using UnityEngine;
 public class ItemOnWorld : MonoBehaviour
 {
     public Item thisItem;
-    public Package playerPackage;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             AddNewItem();
             Destroy(gameObject);
@@ -16,14 +15,6 @@ public class ItemOnWorld : MonoBehaviour
 
     public void AddNewItem()
     {
-        if(!playerPackage.itemList.Contains(thisItem))
-        {
-            playerPackage.itemList.Add(thisItem);
-        }
-        else 
-        {
-            thisItem.itemHeld++;
-        }
-        PackageManager.RefreshItem();
+        PackageManager.AddItemToPackage(thisItem);
     }
 }
