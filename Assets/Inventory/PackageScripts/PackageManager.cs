@@ -14,6 +14,14 @@ public class PackageManager : MonoBehaviour
     public GameObject slotGrid;
     public TextMeshProUGUI itemInfromation;
 
+    public GameObject weaponPanel;
+    public GameObject armorPanel;
+    public GameObject accessoriesPanel;
+    public GameObject propPanel;
+    public GameObject taskItemPanel;
+
+    public ItemType currentShowType = ItemType.Weapon;
+
     public List<PackageItemData> packageItemData = new List<PackageItemData>();
     private void Awake()
     {
@@ -24,14 +32,17 @@ public class PackageManager : MonoBehaviour
         instance = this;
 
         LoadPackageData();
+
+        HideAllPages();
+        weaponPanel.SetActive(true);
     }
 
-    public static void CreateNewItem(PackageItemData item)
+    public static void CreateNewItem(PackageItemData item, GameObject parentPanel)
     {
         Slot newItem = Instantiate(instance.slotPrefab);
-        newItem.transform.SetParent(instance.slotGrid.transform, false);
-        RectTransform slotRect = newItem.GetComponent<RectTransform>();
+        newItem.transform.SetParent(parentPanel.transform, false);
 
+        RectTransform slotRect = newItem.GetComponent<RectTransform>();
         if(slotRect != null)
         {
             slotRect.anchoredPosition = Vector2.zero;
@@ -50,20 +61,46 @@ public class PackageManager : MonoBehaviour
         RefreshItem();
     }
 
+    private GameObject GetPagePanelByType(ItemType type)
+    {
+        switch (type)
+        {
+            case ItemType.Weapon:
+                return weaponPanel;
+            case ItemType.Armor:
+                return armorPanel;
+            case ItemType.Accessories:
+                return accessoriesPanel;
+            case ItemType.Prop:
+                return propPanel;
+            case ItemType.TaskItem:
+                return taskItemPanel;
+            default:
+                return null;
+        }
+    }
+
     public static void RefreshItem()
     {
-        if (instance == null || instance.slotGrid == null) return;
+        if (instance == null) return;
 
-        // 清空现有Slot
-        foreach (Transform child in instance.slotGrid.transform)
+        GameObject currentPage = instance.GetPagePanelByType(instance.currentShowType);
+        foreach (Transform child in currentPage.transform)
         {
             Destroy(child.gameObject);
         }
 
-        // 遍历动态数据创建Slot
-        for (int i = 0; i < instance.packageItemData.Count; i++)
+        List<PackageItemData> fitItems = new List<PackageItemData>();
+        foreach (var item in instance.packageItemData)
         {
-            CreateNewItem(instance.packageItemData[i]);
+            if (item.itemTemplate.itemType == instance.currentShowType)
+            {
+                fitItems.Add(item);
+            }
+        }
+        for (int i = 0; i < fitItems.Count; i++)
+        {
+            CreateNewItem(fitItems[i], currentPage);
         }
     }
 
@@ -125,6 +162,8 @@ public class PackageManager : MonoBehaviour
 
         }
         Debug.Log("读取成功，背包物品数量：" + packageItemData.Count);
+
+        RefreshItem();
     }
 
     private Item FindItemTemplateByName(string itemName)
@@ -132,4 +171,52 @@ public class PackageManager : MonoBehaviour
         return myPackageTemplate.itemList.Find(item => item.itemName == itemName);
     }
     
+    public void OnClickWeaponToggle()
+    {
+        currentShowType = ItemType.Weapon;
+        HideAllPages();
+        weaponPanel.SetActive(true);
+        RefreshItem();
+    }
+
+    public void OnClickArmorToggle()
+    {
+        currentShowType = ItemType.Armor;
+        HideAllPages();
+        armorPanel.SetActive(true);
+        RefreshItem();
+    }
+
+    public void OnClickAccessoriesToggle()
+    {
+        currentShowType = ItemType.Accessories;
+        HideAllPages();
+        accessoriesPanel.SetActive(true);
+        RefreshItem();
+    }
+
+    public void OnClickPropToggle()
+    {
+        currentShowType = ItemType.Prop;
+        HideAllPages();
+        propPanel.SetActive(true);
+        RefreshItem();
+    }
+
+    public void OnClickTaskItemToggle()
+    {
+        currentShowType = ItemType.TaskItem;
+        HideAllPages();
+        taskItemPanel.SetActive(true);
+        RefreshItem();
+    }
+
+    private void HideAllPages()
+    {
+        weaponPanel.SetActive(false);
+        armorPanel.SetActive(false);
+        accessoriesPanel.SetActive(false);
+        propPanel.SetActive(false);
+        taskItemPanel.SetActive(false);
+    }
 }

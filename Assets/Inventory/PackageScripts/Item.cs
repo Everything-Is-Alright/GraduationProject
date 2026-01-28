@@ -9,4 +9,6 @@ public class Item : ScriptableObject
     [TextArea]
     public string itemInfo;
     public bool isEquip;
+
+    public ItemType itemType;
 }
