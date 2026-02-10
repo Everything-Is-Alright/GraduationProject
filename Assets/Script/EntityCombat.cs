@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class EntityCombat : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class EntityCombat : MonoBehaviour
     [SerializeField] private LayerMask whatIsTraget;
     private EntityStats stats;
 
+    [Header("Attack Sound")]
+    [SerializeField] private AudioClip attackSoundClip;
+    private AudioSource audioSource;
 
     private EntityVFX vfx;
 
@@ -16,6 +20,7 @@ public class EntityCombat : MonoBehaviour
     {
         vfx = GetComponent<EntityVFX>();
         stats = GetComponent<EntityStats>();
+        audioSource = GetComponent<AudioSource>();
     }
     public void PerformAttack()
     {
@@ -30,6 +35,13 @@ public class EntityCombat : MonoBehaviour
             //targetHealth?.TakeDamage(damage, transform);
         }
     }
+
+    public void AttackFX()
+    {
+        audioSource.PlayOneShot(attackSoundClip);
+        Debug.Log("触发了第一段攻击音效！");
+    }
+
     private Collider2D[] GetDetectedColliders()
     {
         return Physics2D.OverlapCircleAll(targetCheck.position, targetCheckRadius, whatIsTraget);

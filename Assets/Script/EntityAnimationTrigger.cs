@@ -22,6 +22,11 @@ public class EntityAnimationTrigger : MonoBehaviour
         entityCombat.PerformAttack();
     }
 
+    public void AttackAudioTrigger()
+    {
+        AudioManager.Instance.PlayAttackSound();
+    }
+
     public void EntityDestroyTrigger()
     {
         entity.EntityDestroy();
