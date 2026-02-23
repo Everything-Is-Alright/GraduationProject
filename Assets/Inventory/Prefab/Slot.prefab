@@ -31,9 +31,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8809850691703785765}
-  - {fileID: 3171602948392276639}
   - {fileID: 1618420577597909093}
   - {fileID: 1400293329923375718}
+  - {fileID: 3171602948392276639}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -64,6 +64,7 @@ MonoBehaviour:
   slotItem: {fileID: 0}
   slotImage: {fileID: 8469272680858244773}
   slotNum: {fileID: 4622399462082402305}
+  equipSlotType: 0
 --- !u!1 &2128151016827179872
 GameObject:
   m_ObjectHideFlags: 0
@@ -75,6 +76,7 @@ GameObject:
   - component: {fileID: 3171602948392276639}
   - component: {fileID: 4278658045801253133}
   - component: {fileID: 8469272680858244773}
+  - component: {fileID: 4516245382242918230}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -122,10 +124,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.02425456, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -139,6 +141,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4516245382242918230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2128151016827179872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ef0593e94f3d1448b92a4894872ec9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3306251464858046240
 GameObject:
   m_ObjectHideFlags: 0

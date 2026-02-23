@@ -1,2 +1,19 @@
 fileFormatVersion: 2
 guid: 1d9d885d50b1b2844a9021c6294fed8b
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - slotItem: {fileID: 11400000, guid: e1661597b93d66d45a1f2c0028d22f10, type: 2}
+  - slotPrefab: {instanceID: 0}
+  - slotGrid: {instanceID: 0}
+  - weaponPanel: {instanceID: 0}
+  - armorPanel: {instanceID: 0}
+  - accessoriesPanel: {instanceID: 0}
+  - propPanel: {instanceID: 0}
+  - taskItemPanel: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

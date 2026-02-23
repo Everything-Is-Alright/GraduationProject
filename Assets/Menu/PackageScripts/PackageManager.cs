@@ -95,22 +95,43 @@ public class PackageManager : MonoBehaviour
         if (instance == null) return;
 
         GameObject currentPage = instance.GetPagePanelByType(instance.currentShowType);
+        List<PackageItemData> fitItems = instance.packageItemData.FindAll(item =>item.itemTemplate.itemType == instance.currentShowType);
+
+        Dictionary<Item, Slot> existingSlotMap = new Dictionary<Item, Slot>();
+        List<Slot> allExistingSlots = new List<Slot>();
+
         foreach (Transform child in currentPage.transform)
         {
-            Destroy(child.gameObject);
-        }
-
-        List<PackageItemData> fitItems = new List<PackageItemData>();
-        foreach (var item in instance.packageItemData)
-        {
-            if (item.itemTemplate.itemType == instance.currentShowType)
+            Slot slot = child.GetComponent<Slot>();
+            if (slot != null && slot.slotItem != null)
             {
-                fitItems.Add(item);
+                if (!existingSlotMap.ContainsKey(slot.slotItem))
+                {
+                    existingSlotMap.Add(slot.slotItem, slot);
+                }
+                allExistingSlots.Add(slot);
             }
         }
-        for (int i = 0; i < fitItems.Count; i++)
+
+        foreach (var itemData in fitItems)
         {
-            CreateNewItem(fitItems[i], currentPage);
+            if (existingSlotMap.TryGetValue(itemData.itemTemplate, out Slot existingSlot))
+            {
+                existingSlot.slotNum.text = itemData.itemCount.ToString();
+                existingSlotMap.Remove(itemData.itemTemplate);
+            }
+            else
+            {
+                CreateNewItem(itemData, currentPage);
+            }
+        }
+
+        foreach (var leftoverSlot in existingSlotMap.Values)
+        {
+            if (leftoverSlot != null)
+            {
+                Destroy(leftoverSlot.gameObject);
+            }
         }
     }
 
