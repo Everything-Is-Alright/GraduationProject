@@ -27,6 +27,8 @@ public class PackageManager : MonoBehaviour
     public GameObject propPanel;
     public GameObject taskItemPanel;
 
+    private Dictionary<string, Item> itemTemplateDict;
+
 
     public ItemType currentShowType = ItemType.Weapon;
 
@@ -36,13 +38,14 @@ public class PackageManager : MonoBehaviour
         if(instance != null && instance != this)
         {
             Destroy(gameObject);
+            return;
         }
         instance = this;
 
         DontDestroyOnLoad(gameObject);
-
+        InitItemTemplateDict();
         LoadPackageData();
-
+        
         HideAllPages();
         weaponPanel.SetActive(true);
     }
@@ -87,6 +90,28 @@ public class PackageManager : MonoBehaviour
                 return taskItemPanel;
             default:
                 return null;
+        }
+    }
+
+    private void InitItemTemplateDict()
+    {
+        itemTemplateDict = new Dictionary<string, Item>();
+
+        if (slotItem == null || slotItem.itemList == null)
+        {
+            Debug.LogError("SlotItem或物品列表为空，字典初始化失败！");
+            return;
+        }
+
+        if (slotItem != null && slotItem.itemList != null)
+        {
+            foreach (var item in slotItem.itemList)
+            {
+                if (!itemTemplateDict.ContainsKey(item.itemId))
+                {
+                    itemTemplateDict.Add(item.itemId, item);
+                }
+            }
         }
     }
 
@@ -158,8 +183,10 @@ public class PackageManager : MonoBehaviour
     public void SavePackageData()
     {
         PackageSaveData saveData = new PackageSaveData();
-        foreach(var packageItem in packageItemData)
+        foreach (var packageItem in packageItemData)
         {
+            if (packageItem.itemTemplate == null) continue;
+            saveData.itemIds.Add(packageItem.itemTemplate.itemId);
             saveData.itemNames.Add(packageItem.itemTemplate.itemName);
             saveData.itemCounts.Add(packageItem.itemCount);
         }
@@ -182,26 +209,45 @@ public class PackageManager : MonoBehaviour
         string json = File.ReadAllText(SavePath);
         PackageSaveData saveData = JsonUtility.FromJson<PackageSaveData>(json);
 
-        for (int i = 0; i < saveData.itemNames.Count; i++)
+        int dataCount = Mathf.Min(saveData.itemIds != null ? saveData.itemIds.Count : 0,saveData.itemCounts.Count);
+
+        if (saveData.itemIds != null && saveData.itemIds.Count > 0)
         {
-            Item itemTemplate = FindItemTemplateByName(saveData.itemNames[i]);
-
-            if (itemTemplate != null)
+            for (int i = 0; i < dataCount; i++)
             {
-                packageItemData.Add(new PackageItemData { itemTemplate = itemTemplate, itemCount = saveData.itemCounts[i] });
-            }
+                string itemId = saveData.itemIds[i];
+                Item itemTemplate = FindItemTemplate(itemId);
 
+                if (itemTemplate != null)
+                {
+                    packageItemData.Add(new PackageItemData
+                    {
+                        itemTemplate = itemTemplate,
+                        itemCount = Mathf.Max(1, saveData.itemCounts[i])
+                    });
+                }
+                else
+                {
+                    Debug.LogWarning("未找到物品，跳过加载！");
+                }
+            }
         }
         Debug.Log("读取成功，背包物品数量：" + packageItemData.Count);
 
         RefreshItem();
     }
 
-    private Item FindItemTemplateByName(string itemName)
+    private Item FindItemTemplate(string itemKey)
     {
-        return slotItem.itemList.Find(item => item.itemName == itemName);
+        if (itemTemplateDict.TryGetValue(itemKey, out Item itemById))
+        {
+            return itemById;
+        }
+
+        Debug.LogWarning($"未找到物品");
+        return null;
     }
-    
+
     public void OnClickWeaponToggle()
     {
         currentShowType = ItemType.Weapon;

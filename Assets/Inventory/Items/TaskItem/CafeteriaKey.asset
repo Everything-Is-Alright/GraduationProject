@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 678218d386287474db37fdd19d4d3620, type: 3}
   m_Name: CafeteriaKey
   m_EditorClassIdentifier: 
+  itemId: 501
   itemName: "\u98DF\u5802\u94A5\u5319"
   itemImage: {fileID: 21300000, guid: 9bf57fd503b2a0d4995a81192b2efd25, type: 3}
   itemHeld: 1
