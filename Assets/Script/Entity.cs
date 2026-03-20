@@ -74,7 +74,7 @@ public abstract class Entity<T> : MonoBehaviour, IEntity, IEntityState where T :
 
     public virtual void EntityDeath() { }
 
-    public void EntityDestroy()
+    public virtual void EntityDestroy()
     {
         if (isDestroying)
         {

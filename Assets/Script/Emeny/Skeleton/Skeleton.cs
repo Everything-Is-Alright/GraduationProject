@@ -54,6 +54,30 @@ public class Skeleton : Entity<Skeleton>
         DeathState = new SkeletonDeathState(this, stateMachine, "IsDie");
         StunState = new SkeletonStunState(this, stateMachine, "IsStun");
     }
+    
+    private void OnEnable()
+    {
+        // 监听玩家重生事件
+        if (LevelManager.Instance != null)
+        {
+            LevelManager.Instance.OnPlayerRespawn += OnPlayerRespawn;
+        }
+    }
+    
+    private void OnDisable()
+    {
+        // 移除监听
+        if (LevelManager.Instance != null)
+        {
+            LevelManager.Instance.OnPlayerRespawn -= OnPlayerRespawn;
+        }
+    }
+    
+    private void OnPlayerRespawn()
+    {
+        // 玩家重生时，清除旧引用，准备检测新玩家
+        player = null;
+    }
 
     private void Start()
     {        
@@ -70,11 +94,25 @@ public class Skeleton : Entity<Skeleton>
 
     public Transform GetPlayerRefence()
     {
-        if (player == null)
+        // 检查当前引用是否有效
+        if (player == null || !player.gameObject.activeInHierarchy)
         {
-            player = PlayerDetection().transform;
+            // 重新检测玩家
+            var hit = PlayerDetection();
+            if (hit.collider != null)
+            {
+                player = hit.transform;
+            }
+            else
+            {
+                // 尝试全局查找玩家
+                var playerObj = GameObject.FindWithTag("Player");
+                if (playerObj != null)
+                {
+                    player = playerObj.transform;
+                }
+            }
         }
-
         return player; 
     }
 
@@ -107,14 +145,17 @@ public class Skeleton : Entity<Skeleton>
 
     public RaycastHit2D PlayerDetection()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right * entityFacing, playerCheckDistance, whatIsPlayer | whatIsGround);
-
-        if (hit.collider == null || hit.collider.gameObject.layer != LayerMask.NameToLayer("Player"))
+        // 检测前后两个方向
+        for (int i = -1; i <= 1; i += 2)
         {
-            return default;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right * i, playerCheckDistance, whatIsPlayer);
+            
+            if (hit.collider != null && hit.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                return hit;
+            }
         }
-
-        return hit;
+        return default;
     }
 
     public void ReciveKnockback(Vector2 knockback, float duration)

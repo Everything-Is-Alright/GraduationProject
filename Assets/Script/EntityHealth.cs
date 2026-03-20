@@ -19,7 +19,7 @@ public class EntityHealth : MonoBehaviour, IDamgable
         entityStats = GetComponent<EntityStats>();
         currentHp = entityStats.GetMaxHealth();
         UpdateHealthBar();
-        //Debug.Log("EntityHealth AwakeÖ´ÐÐ£¬currentHp³õÊ¼»¯£º" + currentHp);
+        //Debug.Log("EntityHealth AwakeÖ´ï¿½Ð£ï¿½currentHpï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½" + currentHp);
     }
 
     public virtual void TakeDamage(float damage, float magicDamage, Transform damageDealer)
@@ -69,5 +69,12 @@ public class EntityHealth : MonoBehaviour, IDamgable
     protected virtual void Die()
     {
         isDead = true;
+    }
+    
+    public virtual void ResetHealth()
+    {
+        currentHp = entityStats.GetMaxHealth();
+        isDead = false;
+        UpdateHealthBar();
     }
 }

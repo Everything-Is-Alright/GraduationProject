@@ -28,6 +28,7 @@ public class Player : Entity<Player>
 
     public GameObject Menu;
     public bool isOpen = false;
+    private bool canOpenPackage = true;
     [Header("Roll detail")]
     public float RollMoveMultiplier = 1.5f;
 
@@ -76,8 +77,8 @@ public class Player : Entity<Player>
 
     private void Update() 
     {
-        HandleCollisionDetection();
         stateMachine.UpdateActiveState();
+        HandleCollisionDetection();
         OpenBag();
     }
 
@@ -118,14 +119,33 @@ public class Player : Entity<Player>
     {
         base.EntityDeath();
         stateMachine.ChangeState(playerDeathState);
+        
+        // 通知LevelManager玩家死亡
+        if (LevelManager.Instance != null)
+        {
+            LevelManager.Instance.OnPlayerDeath();
+        }
     }
 
     public void OpenBag()
     {
-        if(Input.GetKeyDown(KeyCode.I))
+        if(canOpenPackage && Input.GetKeyDown(KeyCode.I))
         {
             isOpen = !isOpen;
             Menu.SetActive(isOpen);
         }
     }
+    
+    public void SetPackageOpenEnabled(bool enabled)
+    {
+        canOpenPackage = enabled;
+        if (!enabled && isOpen)
+        {
+            isOpen = false;
+            Menu.SetActive(false);
+        }
+    }
+    
+    // 玩家死亡时可以被销毁
+    // 存档复活功能将在关卡管理器中实现
 }

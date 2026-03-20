@@ -1,95 +1,83 @@
 using UnityEngine;
 using TMPro;
-using System.Data;
-using UnityEngine.UIElements;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 public class PackageManager : MonoBehaviour
 {
     private static PackageManager instance;
+    public static PackageManager Instance => instance;
 
-    public static PackageManager Instance
-    {
-        get
-        {
-            return instance;
-        }
-    }
-
+    [Header("Prefab & References")]
     public Package slotItem;
     public Slot slotPrefab;
-    public GameObject slotGrid;
 
+    [Header("Panels")]
     public GameObject weaponPanel;
     public GameObject armorPanel;
     public GameObject accessoriesPanel;
     public GameObject propPanel;
     public GameObject taskItemPanel;
 
-    private Dictionary<string, Item> itemTemplateDict;
-
-
+    [Header("Current State")]
     public ItemType currentShowType = ItemType.Weapon;
 
-    public List<PackageItemData> packageItemData = new List<PackageItemData>();
+    private Dictionary<string, Item> itemTemplateDict;
+
+    private Dictionary<string, PackageItemData> itemDataDict = new Dictionary<string, PackageItemData>();
+
+    private Dictionary<ItemType, Dictionary<string, Slot>> pageSlotMaps = new Dictionary<ItemType, Dictionary<string, Slot>>();
+
+    private Dictionary<ItemType, GameObject> panelDict = new Dictionary<ItemType, GameObject>();
+
+    private List<Slot> slotPool = new List<Slot>();
+    private Transform poolContainer;
+
+    private HashSet<string> currentTypeItemIds = new HashSet<string>();
+
+    public IReadOnlyDictionary<string, PackageItemData> ItemDataDict => itemDataDict;
+
     private void Awake()
     {
-        if(instance != null && instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
             return;
         }
         instance = this;
-
         DontDestroyOnLoad(gameObject);
+
+        InitializePoolContainer();
+        InitializePanelDict();
         InitItemTemplateDict();
         LoadPackageData();
-        
+
         HideAllPages();
         weaponPanel.SetActive(true);
     }
 
-    public static void CreateNewItem(PackageItemData item, GameObject parentPanel)
+    private void InitializePoolContainer()
     {
-        Slot newItem = Instantiate(instance.slotPrefab);
-        newItem.transform.SetParent(parentPanel.transform, false);
-
-        RectTransform slotRect = newItem.GetComponent<RectTransform>();
-        if(slotRect != null)
-        {
-            slotRect.anchoredPosition = Vector2.zero;
-            slotRect.sizeDelta = Vector2.zero;
-            slotRect.localScale = Vector3.one;
-        }
-
-        newItem.slotItem = item.itemTemplate;
-        newItem.slotImage.sprite = item.itemTemplate.itemImage;
-        newItem.slotImage.enabled = true;
-        newItem.slotNum.text = item.itemCount.ToString();
+        GameObject poolObj = new GameObject("SlotPool");
+        poolObj.transform.SetParent(transform);
+        poolContainer = poolObj.transform;
     }
 
-    private void OnEnable()
+    private void InitializePanelDict()
     {
-        RefreshItem();
-    }
+        panelDict[ItemType.Weapon] = weaponPanel;
+        panelDict[ItemType.Armor] = armorPanel;
+        panelDict[ItemType.Accessories] = accessoriesPanel;
+        panelDict[ItemType.Prop] = propPanel;
+        panelDict[ItemType.TaskItem] = taskItemPanel;
 
-    private GameObject GetPagePanelByType(ItemType type)
-    {
-        switch (type)
+        foreach (var type in System.Enum.GetValues(typeof(ItemType)).Cast<ItemType>())
         {
-            case ItemType.Weapon:
-                return weaponPanel;
-            case ItemType.Armor:
-                return armorPanel;
-            case ItemType.Accessories:
-                return accessoriesPanel;
-            case ItemType.Prop:
-                return propPanel;
-            case ItemType.TaskItem:
-                return taskItemPanel;
-            default:
-                return null;
+            if (!pageSlotMaps.ContainsKey(type))
+            {
+                pageSlotMaps[type] = new Dictionary<string, Slot>();
+            }
         }
     }
 
@@ -99,83 +87,216 @@ public class PackageManager : MonoBehaviour
 
         if (slotItem == null || slotItem.itemList == null)
         {
-            Debug.LogError("SlotItemªÚŒÔ∆∑¡–±ÌŒ™ø’£¨◊÷µ‰≥ı ºªØ ß∞‹£°");
+            Debug.LogError("SlotItemÊàñÁâ©ÂìÅÂàóË°®‰∏∫Á©∫ÔºåÂ≠óÂÖ∏ÂàùÂßãÂåñÂ§±Ë¥•ÔºÅ");
             return;
         }
 
-        if (slotItem != null && slotItem.itemList != null)
+        foreach (var item in slotItem.itemList)
         {
-            foreach (var item in slotItem.itemList)
+            if (!string.IsNullOrEmpty(item.itemId) && !itemTemplateDict.ContainsKey(item.itemId))
             {
-                if (!itemTemplateDict.ContainsKey(item.itemId))
+                itemTemplateDict.Add(item.itemId, item);
+            }
+        }
+    }
+
+    private void OnEnable()
+    {
+        RefreshCurrentPage();
+    }
+
+    private GameObject GetPagePanelByType(ItemType type)
+    {
+        return panelDict.TryGetValue(type, out var panel) ? panel : null;
+    }
+
+    private Slot GetSlotFromPool()
+    {
+        for (int i = slotPool.Count - 1; i >= 0; i--)
+        {
+            if (slotPool[i] != null)
+            {
+                Slot slot = slotPool[i];
+                slotPool.RemoveAt(i);
+                return slot;
+            }
+        }
+
+        Slot newSlot = Instantiate(slotPrefab, poolContainer);
+        return newSlot;
+    }
+
+    private void ReturnSlotToPool(Slot slot)
+    {
+        if (slot == null) return;
+
+        slot.transform.SetParent(poolContainer, false);
+        slot.gameObject.SetActive(false);
+        slot.slotItem = null;
+        slotPool.Add(slot);
+    }
+
+    public void RefreshCurrentPage()
+    {
+        if (instance == null) return;
+
+        GameObject currentPage = GetPagePanelByType(currentShowType);
+        if (currentPage == null) return;
+
+        Dictionary<string, Slot> slotMap = pageSlotMaps[currentShowType];
+
+        currentTypeItemIds.Clear();
+
+        foreach (var kvp in itemDataDict)
+        {
+            PackageItemData itemData = kvp.Value;
+            if (itemData.itemTemplate == null) continue;
+
+            if (itemData.itemTemplate.itemType == currentShowType)
+            {
+                currentTypeItemIds.Add(kvp.Key);
+
+                if (slotMap.TryGetValue(kvp.Key, out Slot existingSlot))
                 {
-                    itemTemplateDict.Add(item.itemId, item);
+                    UpdateSlot(existingSlot, itemData);
+                }
+                else
+                {
+                    Slot newSlot = CreateSlot(itemData, currentPage.transform);
+                    slotMap[kvp.Key] = newSlot;
+                }
+            }
+        }
+
+        List<string> slotsToRemove = null;
+        foreach (var kvp in slotMap)
+        {
+            if (!currentTypeItemIds.Contains(kvp.Key))
+            {
+                if (slotsToRemove == null)
+                    slotsToRemove = new List<string>();
+                slotsToRemove.Add(kvp.Key);
+            }
+        }
+
+        if (slotsToRemove != null)
+        {
+            foreach (string itemId in slotsToRemove)
+            {
+                if (slotMap.TryGetValue(itemId, out Slot slot))
+                {
+                    ReturnSlotToPool(slot);
+                    slotMap.Remove(itemId);
                 }
             }
         }
     }
 
-    public static void RefreshItem()
+    private Slot CreateSlot(PackageItemData itemData, Transform parent)
     {
-        if (instance == null) return;
+        Slot slot = GetSlotFromPool();
+        slot.transform.SetParent(parent, false);
+        slot.gameObject.SetActive(true);
 
-        GameObject currentPage = instance.GetPagePanelByType(instance.currentShowType);
-        List<PackageItemData> fitItems = instance.packageItemData.FindAll(item =>item.itemTemplate.itemType == instance.currentShowType);
-
-        Dictionary<Item, Slot> existingSlotMap = new Dictionary<Item, Slot>();
-        List<Slot> allExistingSlots = new List<Slot>();
-
-        foreach (Transform child in currentPage.transform)
+        RectTransform slotRect = slot.GetComponent<RectTransform>();
+        if (slotRect != null)
         {
-            Slot slot = child.GetComponent<Slot>();
-            if (slot != null && slot.slotItem != null)
-            {
-                if (!existingSlotMap.ContainsKey(slot.slotItem))
-                {
-                    existingSlotMap.Add(slot.slotItem, slot);
-                }
-                allExistingSlots.Add(slot);
-            }
+            slotRect.anchoredPosition = Vector2.zero;
+            slotRect.sizeDelta = Vector2.zero;
+            slotRect.localScale = Vector3.one;
         }
 
-        foreach (var itemData in fitItems)
-        {
-            if (existingSlotMap.TryGetValue(itemData.itemTemplate, out Slot existingSlot))
-            {
-                existingSlot.slotNum.text = itemData.itemCount.ToString();
-                existingSlotMap.Remove(itemData.itemTemplate);
-            }
-            else
-            {
-                CreateNewItem(itemData, currentPage);
-            }
-        }
+        UpdateSlot(slot, itemData);
+        return slot;
+    }
 
-        foreach (var leftoverSlot in existingSlotMap.Values)
+    private void UpdateSlot(Slot slot, PackageItemData itemData)
+    {
+        slot.slotItem = itemData.itemTemplate;
+        if (slot.slotImage != null)
         {
-            if (leftoverSlot != null)
-            {
-                Destroy(leftoverSlot.gameObject);
-            }
+            slot.slotImage.sprite = itemData.itemTemplate.itemImage;
+            slot.slotImage.enabled = true;
+        }
+        if (slot.slotNum != null)
+        {
+            slot.slotNum.text = itemData.itemCount.ToString();
         }
     }
 
     public static void AddItemToPackage(Item itemTemplate)
     {
-        if(instance == null || itemTemplate == null) return;
+        if (instance == null || itemTemplate == null) return;
+        if (string.IsNullOrEmpty(itemTemplate.itemId))
+        {
+            Debug.LogWarning("Áâ©ÂìÅÁº∫Â∞ëitemIdÔºåÊó†Ê≥ïÊ∑ªÂä†ÔºÅ");
+            return;
+        }
 
-        PackageItemData existingItem = instance.packageItemData.Find(b => b.itemTemplate == itemTemplate);
-        if(existingItem != null)
+        string itemId = itemTemplate.itemId;
+
+        if (instance.itemDataDict.TryGetValue(itemId, out PackageItemData existingItem))
         {
             existingItem.itemCount++;
         }
         else
         {
-            instance.packageItemData.Add(new PackageItemData{ itemTemplate = itemTemplate, itemCount = 1});
+            PackageItemData newItem = new PackageItemData
+            {
+                itemTemplate = itemTemplate,
+                itemCount = 1
+            };
+            instance.itemDataDict.Add(itemId, newItem);
         }
 
-        RefreshItem();
+        if (itemTemplate.itemType == instance.currentShowType)
+        {
+            instance.RefreshCurrentPage();
+        }
+
         instance.SavePackageData();
+    }
+
+    public static void RemoveItemFromPackage(string itemId, int count = 1)
+    {
+        if (instance == null || string.IsNullOrEmpty(itemId)) return;
+
+        if (instance.itemDataDict.TryGetValue(itemId, out PackageItemData itemData))
+        {
+            itemData.itemCount -= count;
+
+            if (itemData.itemCount <= 0)
+            {
+                instance.itemDataDict.Remove(itemId);
+
+                if (instance.pageSlotMaps[instance.currentShowType].TryGetValue(itemId, out Slot slot))
+                {
+                    instance.ReturnSlotToPool(slot);
+                    instance.pageSlotMaps[instance.currentShowType].Remove(itemId);
+                }
+            }
+            else
+            {
+                if (instance.pageSlotMaps[instance.currentShowType].TryGetValue(itemId, out Slot slot))
+                {
+                    instance.UpdateSlot(slot, itemData);
+                }
+            }
+
+            instance.SavePackageData();
+        }
+    }
+
+    public static PackageItemData GetItemData(string itemId)
+    {
+        if (instance == null || string.IsNullOrEmpty(itemId)) return null;
+        return instance.itemDataDict.TryGetValue(itemId, out var data) ? data : null;
+    }
+
+    public static int GetItemCount(string itemId)
+    {
+        var data = GetItemData(itemId);
+        return data?.itemCount ?? 0;
     }
 
     private string SavePath => Application.persistentDataPath + "/PackageSave.json";
@@ -183,109 +304,89 @@ public class PackageManager : MonoBehaviour
     public void SavePackageData()
     {
         PackageSaveData saveData = new PackageSaveData();
-        foreach (var packageItem in packageItemData)
+        foreach (var kvp in itemDataDict)
         {
+            PackageItemData packageItem = kvp.Value;
             if (packageItem.itemTemplate == null) continue;
+
             saveData.itemIds.Add(packageItem.itemTemplate.itemId);
             saveData.itemNames.Add(packageItem.itemTemplate.itemName);
             saveData.itemCounts.Add(packageItem.itemCount);
         }
 
-        string json = JsonUtility.ToJson(saveData,true);
+        string json = JsonUtility.ToJson(saveData, true);
         File.WriteAllText(SavePath, json);
-        Debug.Log("”Œœ∑“—±£¥Ê£°" + SavePath);
+        Debug.Log("Ê∏∏ÊàèÂ∑≤‰øùÂ≠òÔºÅ" + SavePath);
     }
 
     public void LoadPackageData()
     {
-        packageItemData.Clear();
+        itemDataDict.Clear();
 
         if (!File.Exists(SavePath))
         {
-            Debug.Log("µ±«∞√ª”–¥ÊµµŒƒº˛£¨≥ı ºªØø’µƒ±≥∞¸£°");
+            Debug.Log("ÂΩìÂâçÊ≤°ÊúâÂ≠òÊ°£Êñá‰ª∂ÔºåÂàùÂßãÂåñÁ©∫ÁöÑËÉåÂåÖÊï∞ÊçÆ");
             return;
         }
 
         string json = File.ReadAllText(SavePath);
         PackageSaveData saveData = JsonUtility.FromJson<PackageSaveData>(json);
 
-        int dataCount = Mathf.Min(saveData.itemIds != null ? saveData.itemIds.Count : 0,saveData.itemCounts.Count);
-
-        if (saveData.itemIds != null && saveData.itemIds.Count > 0)
+        if (saveData.itemIds == null || saveData.itemIds.Count == 0)
         {
-            for (int i = 0; i < dataCount; i++)
-            {
-                string itemId = saveData.itemIds[i];
-                Item itemTemplate = FindItemTemplate(itemId);
+            Debug.Log("Â≠òÊ°£Êï∞ÊçÆ‰∏∫Á©∫");
+            return;
+        }
 
-                if (itemTemplate != null)
+        int dataCount = Mathf.Min(saveData.itemIds.Count, saveData.itemCounts.Count);
+
+        for (int i = 0; i < dataCount; i++)
+        {
+            string itemId = saveData.itemIds[i];
+            Item itemTemplate = FindItemTemplate(itemId);
+
+            if (itemTemplate != null)
+            {
+                itemDataDict[itemId] = new PackageItemData
                 {
-                    packageItemData.Add(new PackageItemData
-                    {
-                        itemTemplate = itemTemplate,
-                        itemCount = Mathf.Max(1, saveData.itemCounts[i])
-                    });
-                }
-                else
-                {
-                    Debug.LogWarning("Œ¥’“µΩŒÔ∆∑£¨Ã¯π˝º”‘ÿ£°");
-                }
+                    itemTemplate = itemTemplate,
+                    itemCount = Mathf.Max(1, saveData.itemCounts[i])
+                };
+            }
+            else
+            {
+                Debug.LogWarning($"Êú™ÊâæÂà∞Áâ©ÂìÅÊ®°Êùø: {itemId}");
             }
         }
-        Debug.Log("∂¡»°≥…π¶£¨±≥∞¸ŒÔ∆∑ ˝¡ø£∫" + packageItemData.Count);
 
-        RefreshItem();
+        Debug.Log($"ËØªÂèñÊàêÂäüÔºåËÉåÂåÖÁâ©ÂìÅÊï∞Èáè: {itemDataDict.Count}");
+        RefreshCurrentPage();
     }
 
-    private Item FindItemTemplate(string itemKey)
+    private Item FindItemTemplate(string itemId)
     {
-        if (itemTemplateDict.TryGetValue(itemKey, out Item itemById))
+        return itemTemplateDict.TryGetValue(itemId, out Item item) ? item : null;
+    }
+
+    public void OnClickWeaponToggle() => SwitchPage(ItemType.Weapon);
+    public void OnClickArmorToggle() => SwitchPage(ItemType.Armor);
+    public void OnClickAccessoriesToggle() => SwitchPage(ItemType.Accessories);
+    public void OnClickPropToggle() => SwitchPage(ItemType.Prop);
+    public void OnClickTaskItemToggle() => SwitchPage(ItemType.TaskItem);
+
+    private void SwitchPage(ItemType type)
+    {
+        if (currentShowType == type) return;
+
+        currentShowType = type;
+        HideAllPages();
+
+        GameObject panel = GetPagePanelByType(type);
+        if (panel != null)
         {
-            return itemById;
+            panel.SetActive(true);
+            RefreshCurrentPage();
         }
-
-        Debug.LogWarning($"Œ¥’“µΩŒÔ∆∑");
-        return null;
-    }
-
-    public void OnClickWeaponToggle()
-    {
-        currentShowType = ItemType.Weapon;
-        HideAllPages();
-        weaponPanel.SetActive(true);
-        RefreshItem();
-    }
-
-    public void OnClickArmorToggle()
-    {
-        currentShowType = ItemType.Armor;
-        HideAllPages();
-        armorPanel.SetActive(true);
-        RefreshItem();
-    }
-
-    public void OnClickAccessoriesToggle()
-    {
-        currentShowType = ItemType.Accessories;
-        HideAllPages();
-        accessoriesPanel.SetActive(true);
-        RefreshItem();
-    }
-
-    public void OnClickPropToggle()
-    {
-        currentShowType = ItemType.Prop;
-        HideAllPages();
-        propPanel.SetActive(true);
-        RefreshItem();
-    }
-
-    public void OnClickTaskItemToggle()
-    {
-        currentShowType = ItemType.TaskItem;
-        HideAllPages();
-        taskItemPanel.SetActive(true);
-        RefreshItem();
     }
 
     private void HideAllPages()
@@ -297,4 +398,21 @@ public class PackageManager : MonoBehaviour
         taskItemPanel.SetActive(false);
     }
 
+    public IReadOnlyList<PackageItemData> GetItemsByType(ItemType type)
+    {
+        var result = new List<PackageItemData>();
+        foreach (var kvp in itemDataDict)
+        {
+            if (kvp.Value.itemTemplate != null && kvp.Value.itemTemplate.itemType == type)
+            {
+                result.Add(kvp.Value);
+            }
+        }
+        return result;
+    }
+
+    public bool HasItem(string itemId)
+    {
+        return itemDataDict.ContainsKey(itemId);
+    }
 }

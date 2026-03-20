@@ -20,14 +20,11 @@ public class PlayerMoveState : PlayerGroundState
     {
         base.Update();
 
-        if (entity.moveInput.x == 0 || entity.wallDetected)
+        if (entity.moveInput.x == 0)
         {
             stateMachine.ChangeState(entity.IdleState);
         }
 
         entity.SetVelocity(entity.moveInput.x * entity.moveSpeed, entity.rb.linearVelocityY);
-
-        
     }
 }
-    

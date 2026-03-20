@@ -28,13 +28,26 @@ public class SkeletonBattleState : EntityState<Skeleton>
     public override void Update()
     {
         base.Update();
+        
+        // 定期检查玩家引用
+        if (player == null || !player.gameObject.activeInHierarchy)
+        {
+            player = entity.GetPlayerRefence();
+            if (player == null)
+            {
+                // 如果找不到玩家，退出战斗状态
+                entity.stateMachine.ChangeState(entity.IdleState);
+                return;
+            }
+        }
 
         if(entity.entityFacing != DirectionToPlayer())
         {
             entity.Flip();
         }
 
-        if(entity.PlayerDetection() == true)
+        var hit = entity.PlayerDetection();
+        if (hit.collider != null)
         {
             UpdateBattleTimer();
         }

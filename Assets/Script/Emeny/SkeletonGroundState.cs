@@ -20,7 +20,8 @@ public class SkeletonGroundState : EntityState<Skeleton>
     {
         base.Update();
 
-        if(entity.PlayerDetection())
+        var hit = entity.PlayerDetection();
+        if (hit.collider != null)
         {
             stateMachine.ChangeState(entity.BattleState);
         }

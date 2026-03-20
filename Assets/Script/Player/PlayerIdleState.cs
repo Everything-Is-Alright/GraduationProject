@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerIdleState : PlayerGroundState
 {
-    public PlayerIdleState(Player player, StateMachine<Player> stateMachine, string stateName) : base(player,stateMachine, stateName)
+    public PlayerIdleState(Player player, StateMachine<Player> stateMachine, string stateName) : base(player, stateMachine, stateName)
     {
     }
 
@@ -21,13 +21,9 @@ public class PlayerIdleState : PlayerGroundState
     {
         base.Update();
 
-        if(entity.moveInput.x == entity.entityFacing && entity.wallDetected)
-            return;
-
-        if(entity.moveInput.x != 0 && entity.groundDetected)
+        if (entity.moveInput.x != 0 && entity.groundDetected)
         {
             stateMachine.ChangeState(entity.MoveState);
         }
-
     }
 }
