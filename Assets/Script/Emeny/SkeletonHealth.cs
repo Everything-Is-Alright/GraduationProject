@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+﻿using Unity.VisualScripting;
 using UnityEngine;
 
 public class SkeletonHealth : EntityHealth
@@ -11,17 +11,18 @@ public class SkeletonHealth : EntityHealth
     protected override void Awake()
     {
         base.Awake();
-        skeleton = GetComponent<Skeleton>(); 
+        skeleton = GetComponent<Skeleton>();
     }
 
     private void Update()
     {
-        onDamageKnockback = new Vector2(3f * Entity<Player>.instance.entityFacing, 0);
+        if (Entity<Player>.instance != null)
+            onDamageKnockback = new Vector2(3f * Entity<Player>.instance.entityFacing, 0);
     }
 
     public override void TakeDamage(float damage, float magicDamage, Transform damageDealer)
     {
-        if(damageDealer.CompareTag("Player"))
+        if (damageDealer.CompareTag("Player"))
         {
             skeleton.TryEnterBattleState(damageDealer);
         }
@@ -33,6 +34,7 @@ public class SkeletonHealth : EntityHealth
     protected override void Die()
     {
         base.Die();
-        Entity<Skeleton>.instance.EntityDeath();
+        // ✅ 修复：删除单例，直接调用自身
+        skeleton.EntityDeath();
     }
 }

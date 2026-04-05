@@ -20,6 +20,9 @@ public class SaveManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        
+        // 确保SaveManager不会跨场景销毁
+        DontDestroyOnLoad(this.gameObject);
     }
     
     public void AddCampfire(Campfire campfire)

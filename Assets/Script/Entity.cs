@@ -39,7 +39,7 @@ public abstract class Entity<T> : MonoBehaviour, IEntity, IEntityState where T :
     {
     }
 
-    void Update()
+    protected virtual void Update()
     {
     }
 

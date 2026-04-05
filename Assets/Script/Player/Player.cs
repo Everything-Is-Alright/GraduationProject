@@ -5,6 +5,8 @@ public class Player : Entity<Player>
 {
     public Transform player;
     public PlayerInputSet input { get; private set; }
+    
+
 
     public PlayerIdleState IdleState { get; private set; }
     public PlayerMoveState MoveState { get; private set; }
@@ -26,9 +28,6 @@ public class Player : Entity<Player>
 
     public Vector2 playerDir;
 
-    public GameObject Menu;
-    public bool isOpen = false;
-    private bool canOpenPackage = true;
     [Header("Roll detail")]
     public float RollMoveMultiplier = 1.5f;
 
@@ -79,7 +78,6 @@ public class Player : Entity<Player>
     {
         stateMachine.UpdateActiveState();
         HandleCollisionDetection();
-        OpenBag();
     }
 
     public override void SetVelocity(float xVelocity, float yVelocity)
@@ -126,26 +124,33 @@ public class Player : Entity<Player>
             LevelManager.Instance.OnPlayerDeath();
         }
     }
+    
+    public void SetMovementEnabled(bool enabled)
+    {
+        if (enabled)
+        {
+            input.Enable();
+        }
+        else
+        {
+            input.Disable();
+        }
+    }
 
-    public void OpenBag()
+    /// <summary>
+    /// 开始翻滚：切换到无敌层
+    /// </summary>
+    public void StartRollInvincible()
     {
-        if(canOpenPackage && Input.GetKeyDown(KeyCode.I))
-        {
-            isOpen = !isOpen;
-            Menu.SetActive(isOpen);
-        }
+        gameObject.layer = LayerMask.NameToLayer("PlayerInvincible");
     }
-    
-    public void SetPackageOpenEnabled(bool enabled)
+
+    /// <summary>
+    /// 结束翻滚：切回正常玩家层
+    /// </summary>
+    public void StopRollInvincible()
     {
-        canOpenPackage = enabled;
-        if (!enabled && isOpen)
-        {
-            isOpen = false;
-            Menu.SetActive(false);
-        }
+        gameObject.layer = LayerMask.NameToLayer("Player");
     }
-    
-    // 玩家死亡时可以被销毁
-    // 存档复活功能将在关卡管理器中实现
+
 }

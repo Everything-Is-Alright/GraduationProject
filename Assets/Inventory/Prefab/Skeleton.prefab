@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3366362452089915485}
   - component: {fileID: 2330699689590221657}
   - component: {fileID: 8593217964763236896}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,8 @@ MonoBehaviour:
   targetCheckRadius: 1.2
   whatIsTraget:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 256
+  attackSoundClip: {fileID: 0}
 --- !u!114 &5120712404454933201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,7 +107,7 @@ MonoBehaviour:
   retreatVelocity: {x: 0, y: 0}
   whatIsPlayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 264
   playerCheckDistance: 10
 --- !u!50 &3260173053262677849
 Rigidbody2D:
@@ -236,7 +237,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4127504352446251283}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: TargetCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +270,7 @@ GameObject:
   - component: {fileID: 7163289350851365338}
   - component: {fileID: 8538661955156024945}
   - component: {fileID: 6708298204608422028}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -344,7 +345,7 @@ GameObject:
   - component: {fileID: 611063877652267140}
   - component: {fileID: 5379920531646567209}
   - component: {fileID: 8016656197181837914}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: WhiteHealth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -420,7 +421,7 @@ GameObject:
   - component: {fileID: 6359009097108377968}
   - component: {fileID: 6313287159795930300}
   - component: {fileID: 6438187214934628259}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Animtion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -541,7 +542,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2395128436135207276}
   - component: {fileID: 6013687998471872375}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -598,7 +599,7 @@ GameObject:
   - component: {fileID: 426103924613018673}
   - component: {fileID: 2520601713039251798}
   - component: {fileID: 8559836976678830196}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -699,7 +700,7 @@ GameObject:
   - component: {fileID: 8153535620413589198}
   - component: {fileID: 8419562331893611677}
   - component: {fileID: 5531491035793636330}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: RedHealth
   m_TagString: Untagged
   m_Icon: {fileID: 0}

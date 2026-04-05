@@ -30,6 +30,17 @@ public class Slot : MonoBehaviour
     {
         if (slotItem != null)
         {
+            // Debug显示点击的物品名称
+            Debug.Log("点击的物品: " + slotItem.itemName);
+            
+            // 尝试获取PackageTextManager并更新文本
+            PackageTextManager textManager = FindObjectOfType<PackageTextManager>();
+            if (textManager != null)
+            {
+                textManager.UpdateItemText(slotItem);
+            }
+            
+            // 检查是否是宝箱中的物品
             Chest chest = GetComponentInParent<Chest>();
             if (chest != null)
             {

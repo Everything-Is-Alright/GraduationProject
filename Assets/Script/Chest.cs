@@ -11,6 +11,7 @@ public class Chest : MonoBehaviour
 
     [Header("UI")]
     public GameObject chestPanel;
+    public GameObject interactUI; // 交互提示界面
     public Transform slotContainer;
     public Slot slotPrefab;
 
@@ -28,7 +29,7 @@ public class Chest : MonoBehaviour
 
     private List<Slot> currentSlots = new List<Slot>();
 
-    void Start()
+    private void Start()
     {
         chestAnimator = GetComponentInChildren<Animator>();
 
@@ -36,24 +37,63 @@ public class Chest : MonoBehaviour
         {
             chestPanel.SetActive(false);
         }
+        
+        if (interactUI != null)
+        {
+            interactUI.SetActive(false);
+        }
+    }
+    
+    private void OnEnable()
+    {
+        // 监听玩家重生事件
+        if (LevelManager.Instance != null)
+        {
+            LevelManager.Instance.OnPlayerRespawn += OnPlayerRespawn;
+        }
+    }
+    
+    private void OnDisable()
+    {
+        // 移除监听
+        if (LevelManager.Instance != null)
+        {
+            LevelManager.Instance.OnPlayerRespawn -= OnPlayerRespawn;
+        }
+    }
+    
+    private void OnPlayerRespawn()
+    {
+        // 玩家重生时，清除旧引用
+        player = null;
+        isPlayerInRange = false;
+        
+        // 确保面板关闭
+        if (isPanelOpen)
+        {
+            ClosePanel();
+        }
     }
 
     void Update()
     {
-        if (isPlayerInRange && player != null &&
-            player.input.Player.Action.WasPressedThisFrame())
+        if (isPlayerInRange && player != null)
         {
-            if (!isChestOpened)
+            // 直接使用Input.GetKeyDown检测E键，不受玩家输入系统状态影响
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                OpenChest();
-            }
-            else if (isPanelOpen)
-            {
-                ClosePanel();
-            }
-            else
-            {
-                OpenPanel();
+                if (!isChestOpened)
+                {
+                    OpenChest();
+                }
+                else if (isPanelOpen)
+                {
+                    ClosePanel();
+                }
+                else
+                {
+                    OpenPanel();
+                }
             }
         }
     }
@@ -63,19 +103,33 @@ public class Chest : MonoBehaviour
         if (((1 << other.gameObject.layer) & playerLayer) != 0)
         {
             isPlayerInRange = true;
+            player = other.GetComponent<Player>(); // 自动获取玩家引用
             Debug.Log("按E打开宝箱");
+            
+            // 显示交互提示界面
+            if (interactUI != null)
+            {
+                interactUI.SetActive(true);
+            }
         }
     }
-
+    
     private void OnTriggerExit2D(Collider2D other)
     {
         if (((1 << other.gameObject.layer) & playerLayer) != 0)
         {
             isPlayerInRange = false;
+            player = null; // 清除玩家引用
 
             if (isPanelOpen)
             {
                 ClosePanel();
+            }
+            
+            // 隐藏交互提示界面
+            if (interactUI != null)
+            {
+                interactUI.SetActive(false);
             }
         }
     }
@@ -108,11 +162,8 @@ public class Chest : MonoBehaviour
         chestPanel.SetActive(true);
         isPanelOpen = true;
         
-        // 禁用玩家背包打开
-        if (player != null)
-        {
-            player.SetPackageOpenEnabled(false);
-        }
+        // 禁用玩家操作
+        DisablePlayerMovement();
 
         RefreshRewardSlots();
     }
@@ -124,10 +175,27 @@ public class Chest : MonoBehaviour
         chestPanel.SetActive(false);
         isPanelOpen = false;
         
-        // 启用玩家背包打开
+        // 启用玩家操作
+        EnablePlayerMovement();
+    }
+    
+    private void DisablePlayerMovement()
+    {
+        // 查找玩家并禁用其移动
+        Player player = FindObjectOfType<Player>();
         if (player != null)
         {
-            player.SetPackageOpenEnabled(true);
+            player.SetMovementEnabled(false);
+        }
+    }
+    
+    private void EnablePlayerMovement()
+    {
+        // 查找玩家并启用其移动
+        Player player = FindObjectOfType<Player>();
+        if (player != null)
+        {
+            player.SetMovementEnabled(true);
         }
     }
 
@@ -245,8 +313,11 @@ public class Chest : MonoBehaviour
             // 添加到玩家背包
             PackageManager.AddItemToPackage(item);
             
+            // 延迟刷新，避免与Slot点击事件冲突
+            Invoke("RefreshRewardSlots", 0.1f);
+            
             // 刷新界面
-            RefreshRewardSlots();
+            // RefreshRewardSlots();
             
             // 检查是否所有物品都已收集
             if (rewardItems.Count == 0)

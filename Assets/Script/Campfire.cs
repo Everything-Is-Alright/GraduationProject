@@ -9,6 +9,9 @@ public class Campfire : MonoBehaviour
     [Header("Identification")]
     public string campfireId;
     
+    [Header("UI")]
+    public GameObject interactUI; // 交互提示界面
+    
     [Header("References")]
     public Player player;
     
@@ -21,6 +24,11 @@ public class Campfire : MonoBehaviour
         if (SaveManager.Instance != null)
         {
             SaveManager.Instance.AddCampfire(this);
+        }
+        
+        if (interactUI != null)
+        {
+            interactUI.SetActive(false);
         }
     }
     
@@ -49,6 +57,12 @@ public class Campfire : MonoBehaviour
             isPlayerInRange = true;
             player = other.GetComponent<Player>(); // 自动获取玩家引用
             Debug.Log("按E与篝火交互");
+            
+            // 显示交互提示界面
+            if (interactUI != null)
+            {
+                interactUI.SetActive(true);
+            }
         }
     }
     
@@ -58,6 +72,12 @@ public class Campfire : MonoBehaviour
         {
             isPlayerInRange = false;
             player = null; // 清除玩家引用
+            
+            // 隐藏交互提示界面
+            if (interactUI != null)
+            {
+                interactUI.SetActive(false);
+            }
         }
     }
     
@@ -66,6 +86,17 @@ public class Campfire : MonoBehaviour
         if (!isActivated)
         {
             isActivated = true;
+        }
+        
+        // 恢复玩家血量
+        if (player != null)
+        {
+            EntityHealth playerHealth = player.GetComponent<EntityHealth>();
+            if (playerHealth != null)
+            {
+                playerHealth.ResetHealth();
+                Debug.Log("玩家血量已恢复满");
+            }
         }
         
         // 保存游戏

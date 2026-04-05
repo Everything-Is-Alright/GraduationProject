@@ -8,15 +8,15 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Player
+  - NPC
   - Water
   - UI
   - Ground
+  - Item
+  - Player
   - Enemy
-  - 
-  - 
-  - 
-  - 
+  - EnemySkill
+  - PlayerInvincible
   - 
   - 
   - 
@@ -47,14 +47,26 @@ TagManager:
   - name: Chests
     uniqueID: 2438802639
     locked: 0
-  - name: Player
-    uniqueID: 2436702051
+  - name: NPC
+    uniqueID: 879477223
+    locked: 0
+  - name: Item
+    uniqueID: 2681546093
     locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: UI
     uniqueID: 3970278639
+    locked: 0
+  - name: EnemySkill
+    uniqueID: 1816901139
+    locked: 0
+  - name: Player
+    uniqueID: 2436702051
+    locked: 0
+  - name: Boss
+    uniqueID: 280191577
     locked: 0
   m_RenderingLayers:
   - Default
