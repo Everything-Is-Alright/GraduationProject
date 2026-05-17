@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3735696317202311526}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: EnduranceBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 4724871285945960123}
   - component: {fileID: 4645044957202074384}
   - component: {fileID: 9085900838023900811}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,7 +150,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3277770083629382484}
   - component: {fileID: 4549694046228932557}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -206,7 +206,7 @@ GameObject:
   - component: {fileID: 9174857292343656121}
   - component: {fileID: 6920614253608701137}
   - component: {fileID: 5137233980724580144}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: RedHedlth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -504,7 +504,7 @@ GameObject:
   - component: {fileID: 635032988193081094}
   - component: {fileID: 3094685710430673739}
   - component: {fileID: 6148511701862401034}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -580,7 +580,7 @@ GameObject:
   - component: {fileID: 7286480190272070085}
   - component: {fileID: 7605395286533728817}
   - component: {fileID: 6769212735607949612}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Animation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -753,7 +753,7 @@ GameObject:
   - component: {fileID: 7446077319984691464}
   - component: {fileID: 7986873915615172026}
   - component: {fileID: 5165928494229155487}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -826,7 +826,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4707964924588561160}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: TargetCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -859,7 +859,7 @@ GameObject:
   - component: {fileID: 5667566331480699431}
   - component: {fileID: 7306738144876366202}
   - component: {fileID: 4547253190177559713}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: GreenHedlth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -934,7 +934,7 @@ GameObject:
   - component: {fileID: 179603662356744729}
   - component: {fileID: 6620845168939535624}
   - component: {fileID: 5019514503172541878}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: WhiteHealth
   m_TagString: Untagged
   m_Icon: {fileID: 0}

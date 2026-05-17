@@ -6,26 +6,31 @@ public class EntityAnimationTrigger : MonoBehaviour
 {
     private IEntity entity;
     private EntityCombat entityCombat;
+    private LaserController laserController;
 
     [Header("Animation Event UnityEvents (可在 Inspector 关联方法)")]
-    public UnityEvent OnFireFrame;               // 原有通用事件（保留）
+    public UnityEvent OnFireFrame;               
     public UnityEvent<int> OnFireInt;
     public UnityEvent<float> OnFireFloat;
     public UnityEvent<string> OnFireString;
 
     [Header("Boss专属独立攻击触发（隔离互不干扰）")]
-    public UnityEvent OnAttack1;  // 对应：SpawnAtSpawnPoint_NoParam()
-    public UnityEvent OnAttack2;  // 对应：SpawnAttack2_FiveUp_NoParam()
-    public UnityEvent OnAttack3;  // 对应：SpawnAttack3_RandomPattern_NoParam()
+    public UnityEvent OnAttack1;  
+    public UnityEvent OnAttack2; 
+    public UnityEvent OnAttack3; 
 
     [Header("翻滚无敌触发")]
-    public UnityEvent OnRollStart;  // 翻滚动画第一帧调用
-    public UnityEvent OnRollEnd;    // 翻滚动画最后一帧调用
+    public UnityEvent OnRollStart;  
+    public UnityEvent OnRollEnd;   
+    [Header("激光动画触发【新增】")]
+    public UnityEvent OnLaserStart;  
+    public UnityEvent OnLaserState;
 
     private void Awake()
     {
         entity = GetComponentInParent<IEntity>();
         entityCombat = GetComponentInParent<EntityCombat>();
+        laserController = GetComponentInParent<LaserController>();
     }
 
     // 现有事件：通知实体当前状态触发（保留）
@@ -112,5 +117,25 @@ public class EntityAnimationTrigger : MonoBehaviour
         // 子物体 → 直接修改父物体(Player)恢复正常层级
         if (transform.parent != null)
             transform.parent.gameObject.layer = LayerMask.NameToLayer("Player");
+    }
+    public void TriggerLaserStart()
+    {
+        OnLaserStart?.Invoke();
+        if (laserController != null)
+        {
+            laserController.SetColliderEnabled(false);
+        }
+    }
+
+    /// <summary>
+    /// 动画事件：LaserState 状态 → 启用激光碰撞箱
+    /// </summary>
+    public void TriggerLaserState()
+    {
+        OnLaserState?.Invoke();
+        if (laserController != null)
+        {
+            laserController.SetColliderEnabled(true);
+        }
     }
 }

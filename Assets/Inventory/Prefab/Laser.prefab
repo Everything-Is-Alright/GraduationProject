@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3715996403074631735}
   - component: {fileID: 5557754925806531289}
   - component: {fileID: 1744231096681383665}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,6 +103,7 @@ GameObject:
   - component: {fileID: 3764068522285643224}
   - component: {fileID: 9068243079352901455}
   - component: {fileID: 2888944469776881951}
+  - component: {fileID: 5649712314338563890}
   m_Layer: 10
   m_Name: Animation
   m_TagString: Untagged
@@ -202,3 +203,48 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5649712314338563890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3342730273068538518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07f19524c2ef59248b0ff4a069dee13c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnFireFrame:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFireInt:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFireFloat:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFireString:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAttack1:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAttack2:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAttack3:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRollStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRollEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLaserStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLaserState:
+    m_PersistentCalls:
+      m_Calls: []

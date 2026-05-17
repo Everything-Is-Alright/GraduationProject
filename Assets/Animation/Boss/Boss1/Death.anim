@@ -22,38 +22,38 @@ AnimationClip:
     curve:
     - time: 0
       value: {fileID: -4698252060039961290, guid: 23cb9276d78843d44923a8fde1d5b27b, type: 3}
-    - time: 0.1
+    - time: 0.16666667
       value: {fileID: -6982027976042988718, guid: 23cb9276d78843d44923a8fde1d5b27b, type: 3}
-    - time: 0.2
+    - time: 0.33333334
       value: {fileID: 1533372256616537565, guid: 23cb9276d78843d44923a8fde1d5b27b, type: 3}
-    - time: 0.3
-      value: {fileID: 4250522090883771173, guid: 23cb9276d78843d44923a8fde1d5b27b, type: 3}
-    - time: 0.4
-      value: {fileID: -8564123921932349484, guid: 23cb9276d78843d44923a8fde1d5b27b, type: 3}
     - time: 0.5
+      value: {fileID: 4250522090883771173, guid: 23cb9276d78843d44923a8fde1d5b27b, type: 3}
+    - time: 0.6666667
+      value: {fileID: -8564123921932349484, guid: 23cb9276d78843d44923a8fde1d5b27b, type: 3}
+    - time: 0.8333333
       value: {fileID: 5787725703830310820, guid: 23cb9276d78843d44923a8fde1d5b27b, type: 3}
-    - time: 0.6
-      value: {fileID: -6686977170744773226, guid: 23cb9276d78843d44923a8fde1d5b27b, type: 3}
-    - time: 0.7
-      value: {fileID: 3672003153334294632, guid: 23cb9276d78843d44923a8fde1d5b27b, type: 3}
-    - time: 0.8
-      value: {fileID: 3066826442690724868, guid: 23cb9276d78843d44923a8fde1d5b27b, type: 3}
-    - time: 0.9
-      value: {fileID: 4512569549230767166, guid: 23cb9276d78843d44923a8fde1d5b27b, type: 3}
     - time: 1
+      value: {fileID: -6686977170744773226, guid: 23cb9276d78843d44923a8fde1d5b27b, type: 3}
+    - time: 1.1666666
+      value: {fileID: 3672003153334294632, guid: 23cb9276d78843d44923a8fde1d5b27b, type: 3}
+    - time: 1.3333334
+      value: {fileID: 3066826442690724868, guid: 23cb9276d78843d44923a8fde1d5b27b, type: 3}
+    - time: 1.5
+      value: {fileID: 4512569549230767166, guid: 23cb9276d78843d44923a8fde1d5b27b, type: 3}
+    - time: 1.6666666
       value: {fileID: 267526817094466541, guid: 23cb9276d78843d44923a8fde1d5b27b, type: 3}
-    - time: 1.1
+    - time: 1.8333334
       value: {fileID: 6847894012819005928, guid: 23cb9276d78843d44923a8fde1d5b27b, type: 3}
-    - time: 1.2
+    - time: 2
       value: {fileID: 7296255639352141968, guid: 23cb9276d78843d44923a8fde1d5b27b, type: 3}
-    - time: 1.3
+    - time: 2.1666667
       value: {fileID: 3574357975365986155, guid: 23cb9276d78843d44923a8fde1d5b27b, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
     flags: 2
-  m_SampleRate: 10
+  m_SampleRate: 6
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -89,7 +89,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1.4
+    m_StopTime: 2.3333335
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -108,4 +108,11 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 2.1666667
+    functionName: EntityDestroyTrigger
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
